@@ -1,24 +1,40 @@
+﻿using Solver;
+using MazeEnv;
 using System;
-using MazeMap;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BingChilling
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            // Create a new 5x5 maze
-            Maze maze = new Maze(5, 5);
+            // Maze grid
+            int[,] grid = new int[,] {
+                {0, 1, 0, 0, 2},
+                {0, 1, 1, 1, 0},
+                {0, 0, 0, 1, 0},
+                {0, 1, 0, 1, 0},
+                {0, 0, 0, 0, 0}
+            };
 
-            // Load maze data from file
-            maze.Load("maze.txt");
+            // Starting position of the maze
+            int startX = 0;
+            int startY = 0;
 
-            // Display the maze
-            maze.Display();
+            // Create empty maze
+            Maze maze = new Maze(0, 0, startX, startY);
 
-            // Create start and end nodes
-            //Node start = new Node(maze.StartRow, maze.StartCol);
-            //Node end = new Node(maze.EndRow, maze.EndCol);
+            // Load maze
+            maze.Load(@"C:\\Users\\Fio\\source\\repos\\BingChilling\\Tubes2_BingChilling\\src\\maze.txt");
+
+            // Search with BFS
+            BFS bfs = new BFS(maze);
+            bfs.Search(startX, startY);
+            Console.ReadLine();
         }
     }
 }

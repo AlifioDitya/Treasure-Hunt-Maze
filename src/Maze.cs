@@ -1,24 +1,29 @@
 using System;
 using System.IO;
 
-namespace MazeMap
+namespace MazeEnv
 {
     public class Maze
     {
         private int[,] _grid;   // 2D array to store maze cells
-        private int _rows;      // Number of rows in the maze
-        private int _cols;      // Number of columns in the maze
+        public static int _rows;      // Number of rows in the maze
+        public static int _cols;      // Number of columns in the maze
         private int _startRow;  // Row index of the start point
         private int _startCol;  // Column index of the start point
-        private int _endRow;    // Row index of the end point
-        private int _endCol;    // Column index of the end point
 
         // Constructor to create an empty maze
-        public Maze(int rows, int cols)
-        {
+        public Maze(int rows, int cols, int startRow, int startCol)
+        {   
             _rows = rows;
             _cols = cols;
             _grid = new int[rows, cols];
+        }
+
+        // Indexer
+        public int this[int row, int col]
+        {
+            get { return _grid[row, col]; }
+            set { _grid[row, col] = value; }
         }
 
         // Method to load a maze from a file
@@ -39,19 +44,19 @@ namespace MazeMap
             {
                 for (int j = 0; j < _cols; j++)
                 {
-                    if (lines[i][j] == 'S')
+                    if (lines[i][j] == 'K')
                     {
                         // Set start point
                         _startRow = i;
                         _startCol = j;
+                        _grid[i, j] = 0;
                     }
-                    else if (lines[i][j] == 'E')
+                    else if (lines[i][j] == 'T')
                     {
                         // Set end point
-                        _endRow = i;
-                        _endCol = j;
+                        _grid[i, j] = 2;
                     }
-                    else if (lines[i][j] == '#')
+                    else if (lines[i][j] == 'X')
                     {
                         // Set wall
                         _grid[i, j] = 1;
@@ -76,13 +81,13 @@ namespace MazeMap
                     {
                         Console.Write("S");
                     }
-                    else if (i == _endRow && j == _endCol)
+                    else if (_grid[i, j] == 2)
                     {
-                        Console.Write("E");
+                        Console.Write("T");
                     }
                     else if (_grid[i, j] == 1)
                     {
-                        Console.Write("#");
+                        Console.Write("X");
                     }
                     else
                     {
@@ -117,18 +122,6 @@ namespace MazeMap
         {
             get { return _startCol; }
             set { _startCol = value; }
-        }
-
-        public int EndRow
-        {
-            get { return _endRow; }
-            set { _endRow = value; }
-        }
-
-        public int EndCol
-        {
-            get { return _endCol; }
-            set { _endCol = value; }
         }
     }
 }
