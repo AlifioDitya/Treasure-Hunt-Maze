@@ -1,7 +1,4 @@
-using System;
-using System.IO;
-
-namespace MazeEnv
+namespace BingChilling.Environment
 {
     public class Maze
     {
@@ -14,7 +11,7 @@ namespace MazeEnv
 
         // Constructor to create an empty maze
         public Maze(int rows, int cols, int startRow, int startCol)
-        {   
+        {
             _rows = rows;
             _cols = cols;
             _grid = new int[rows, cols];

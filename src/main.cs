@@ -1,10 +1,5 @@
-﻿using Solver;
-using MazeEnv;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BingChilling.Algorithms;
+using BingChilling.Environment;
 
 namespace BingChilling
 {
@@ -25,6 +20,11 @@ namespace BingChilling
             // Search with BFS
             BFS bfs = new BFS(maze);
             bfs.Search(startX, startY);
+            Console.WriteLine();
+
+            // Search with DFS
+            DFS dfs = new DFS(maze);
+            dfs.Search(startX, startY);
             Console.ReadLine();
         }
     }

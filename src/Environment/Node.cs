@@ -1,13 +1,6 @@
-﻿using MazeEnv;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MazeEnv
+﻿namespace BingChilling.Environment
 {
-    internal class Node
+    public class Node
     {
         private int x;
         private int y;
@@ -43,27 +36,27 @@ namespace MazeEnv
             List<Node> nextMoves = new List<Node>();
 
             // Check up
-            if (this.x > 0 && maze[this.x - 1, this.Y] != 1)
+            if (x > 0 && maze[x - 1, Y] != 1)
             {
-                nextMoves.Add(new Node(this.x - 1, this.y, this));
+                nextMoves.Add(new Node(x - 1, y, this));
             }
 
             // Check down
-            if (this.x < maze.Rows - 1 && maze[this.x + 1, this.y] != 1)
+            if (x < maze.Rows - 1 && maze[x + 1, y] != 1)
             {
-                nextMoves.Add(new Node(this.x + 1, this.y, this));
+                nextMoves.Add(new Node(x + 1, y, this));
             }
 
             // Check left
-            if (this.y > 0 && maze[this.x, this.y - 1] != 1)
+            if (y > 0 && maze[x, y - 1] != 1)
             {
-                nextMoves.Add(new Node(this.x, this.y - 1, this));
+                nextMoves.Add(new Node(x, y - 1, this));
             }
 
             // Check right
-            if (this.y < maze.Cols - 1 && maze[this.x, this.y + 1] != 1)
+            if (y < maze.Cols - 1 && maze[x, y + 1] != 1)
             {
-                nextMoves.Add(new Node(this.x, this.y + 1, this));
+                nextMoves.Add(new Node(x, y + 1, this));
             }
 
             return nextMoves;
@@ -78,12 +71,12 @@ namespace MazeEnv
 
             if (parent == null)
             {
-                Console.WriteLine("({0}, {1})", this.x, this.y);
+                Console.WriteLine("({0}, {1})", x, y);
             }
             else
             {
-                this.parent.PrintPath();
-                Console.WriteLine("({0}, {1})", this.x, this.y);
+                parent.PrintPath();
+                Console.WriteLine("({0}, {1})", x, y);
             }
         }
     }

@@ -1,33 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using MazeEnv;
+﻿using BingChilling.Environment;
 
-namespace Solver
+namespace BingChilling.Algorithms
 {
-    public class BFS
+    public class BFS : Solver
     {
-        private Maze maze;
-        private int[,] visited;
-        private List<Node> treasureNodes;
 
-        public BFS(Maze maze)
-        {
-            this.maze = maze;
-            visited = new int[maze.Rows, maze.Cols];
-            treasureNodes = new List<Node>();
-        }
+        public BFS(Maze maze) : base(maze) { }
 
-        public void Search(int startX, int startY)
+        public override void Search(int startX, int startY)
         {
             Queue<Node> queue = new Queue<Node>();
             Node startNode = new Node(startX, startY, null);
-            Node currentNode = startNode;
             queue.Enqueue(startNode);
+
+            Console.WriteLine("BFS begins search...");
 
             while (queue.Count > 0)
             {
-                currentNode = queue.Dequeue();
+                Node currentNode = queue.Dequeue();
 
                 // If the current node is a treasure
                 if (maze[currentNode.X, currentNode.Y] == 2 && !treasureNodes.Any(node => node.X == currentNode.X && node.Y == currentNode.Y))
