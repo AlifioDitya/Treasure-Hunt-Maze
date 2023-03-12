@@ -4,7 +4,7 @@
     {
         private int x;
         private int y;
-        private Node parent;
+        private Node? parent;
 
         public Node(int x, int y, Node? parent)
         {
@@ -23,12 +23,6 @@
         {
             get { return y; }
             set { y = value; }
-        }
-
-        public Node Parent
-        {
-            get { return parent; }
-            set { parent = value; }
         }
 
         public List<Node> GenerateNextMoves(Maze maze)
