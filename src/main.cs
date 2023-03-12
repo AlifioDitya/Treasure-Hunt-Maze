@@ -12,15 +12,6 @@ namespace BingChilling
     {
         public static void Main()
         {
-            // Maze grid
-            int[,] grid = new int[,] {
-                {0, 1, 0, 0, 2},
-                {0, 1, 1, 1, 0},
-                {0, 0, 0, 1, 0},
-                {0, 1, 0, 1, 0},
-                {0, 0, 0, 0, 0}
-            };
-
             // Starting position of the maze
             int startX = 0;
             int startY = 0;

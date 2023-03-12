@@ -6,10 +6,11 @@ namespace MazeEnv
     public class Maze
     {
         private int[,] _grid;   // 2D array to store maze cells
-        public static int _rows;      // Number of rows in the maze
-        public static int _cols;      // Number of columns in the maze
+        private int _rows;      // Number of rows in the maze
+        private int _cols;      // Number of columns in the maze
         private int _startRow;  // Row index of the start point
         private int _startCol;  // Column index of the start point
+        private int _treasures; // Number of treasures inside the maze
 
         // Constructor to create an empty maze
         public Maze(int rows, int cols, int startRow, int startCol)
@@ -55,6 +56,7 @@ namespace MazeEnv
                     {
                         // Set end point
                         _grid[i, j] = 2;
+                        _treasures++;
                     }
                     else if (lines[i][j] == 'X')
                     {
@@ -122,6 +124,12 @@ namespace MazeEnv
         {
             get { return _startCol; }
             set { _startCol = value; }
+        }
+
+        public int Treasures
+        {
+            get { return _treasures; }
+            set { _treasures = value; }
         }
     }
 }
