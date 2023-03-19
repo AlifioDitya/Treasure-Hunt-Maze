@@ -11,7 +11,7 @@ namespace BingChilling
             Maze maze = new Maze(0, 0);
 
             // Load maze
-            maze.Load(@"C:\\Users\\Fio\\source\\repos\\BingChilling\\Tubes2_BingChilling\\src\\maze.txt");
+            maze.Load(@"/Users/irsyadnb/Downloads/ITB Jaya/SMT 4/STIMA/Tubes2_BingChilling/src/maze.txt");
 
             // Search with BFS
             BFS bfs = new BFS(maze);
