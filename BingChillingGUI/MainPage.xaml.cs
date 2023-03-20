@@ -34,11 +34,13 @@
                                     matrix[row, col] = 1; // Road
                                 else if (c == 'T')
                                     matrix[row, col] = 2; // Treasure
+                                else if (c == 'K')
+                                    matrix[row, col] = 0;
                                 col++;
                             }
                             row++;
                         }
-
+                        
                         DisplayMaze(matrix);
                     }
                 }
@@ -52,19 +54,28 @@
 
         private void DisplayMaze(int[,] matrix)
         {
+            
             // Create a new grid to hold the maze
             var grid = new Grid
             {
-                ColumnSpacing = 0,
-                RowSpacing = 0
+                ColumnSpacing = 1,
+                RowSpacing = 1,
+                BackgroundColor = Color.FromRgb(255, 255, 255),
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition { Height = new GridLength(0.2, GridUnitType.Star) },
+                    new RowDefinition(),
+                    new RowDefinition { Height = new GridLength(0.2, GridUnitType.Star) }
+                },
+                        ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = new GridLength(0.2, GridUnitType.Star) },
+                    new ColumnDefinition(),
+                    new ColumnDefinition { Width = new GridLength(0.2, GridUnitType.Star) }
+                }
             };
-
-            // Add columns and rows to the grid
-            for (int i = 0; i < 5; i++)
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
-            }
 
             // Loop through the matrix and create a label for each element
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -78,17 +89,20 @@
                         TextColor = matrix[i, j] == 2 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
                         BackgroundColor = matrix[i, j] == -1 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
                         HorizontalTextAlignment = TextAlignment.Center,
-                        VerticalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center
                     };
 
                     // Add the label to the grid
+                    Grid.SetRow(label, i);
+                    Grid.SetColumn(label, j);
                     grid.Children.Add(label);
                 }
             }
 
-            // Add the grid to the main page
-            Content = grid;
+            // Set the content of the mazeView to the grid
+            mazeView.Content = grid;
         }
+
 
 
         // Helper method to get the background color for each element

@@ -36,6 +36,9 @@
         </Grid>
 
         <!--Maze-->
+        <!--<Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <ContentView x:Name="mazeView"/>
+        </Grid>-->
         <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.RowSpan="2" Grid.ColumnSpan="3" RowSpacing="1" ColumnSpacing="1">
              <Grid.RowDefinitions>
                 <RowDefinition Height=".2*"/>
@@ -52,7 +55,10 @@
             <Label BackgroundColor="Red" Grid.Row="0" Grid.Column="1"/>
             <Label BackgroundColor="Red" Grid.Row="0" Grid.Column="2"/>
             <Label BackgroundColor="Red" Grid.Row="1" Grid.Column="0"/>
-            <Label BackgroundColor="Red" Grid.Row="1" Grid.Column="1"/>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <ContentView x:Name="mazeView"/>
+
+            </Grid>
             <Label BackgroundColor="Red" Grid.Row="1" Grid.Column="2"/>
             <Label BackgroundColor="Red" Grid.Row="2" Grid.Column="0"/>
             <Label BackgroundColor="Red" Grid.Row="2" Grid.Column="1"/>
