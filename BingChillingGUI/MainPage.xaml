@@ -21,7 +21,7 @@
             <Label Text="TREASURE HUNT SOLVER" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
         </Grid>
 
-        <!--Input File-->
+        <!--INPUT FILE-->
         <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -35,41 +35,63 @@
             <Button Clicked="Button_Clicked" Text="Input File" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
         </Grid>
 
-        <!--Maze-->
-        <!--<Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3">
-            <ContentView x:Name="mazeView"/>
-        </Grid>-->
-        <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.RowSpan="2" Grid.ColumnSpan="3" RowSpacing="1" ColumnSpacing="1">
+        <!--MAZE-->
+        <Grid BackgroundColor="Black" Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.RowSpan="2" Grid.ColumnSpan="3" RowSpacing="5" ColumnSpacing="5">
              <Grid.RowDefinitions>
                 <RowDefinition Height=".2*"/>
                 <RowDefinition />
                 <RowDefinition Height=".2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".2*"/>
+                <ColumnDefinition Width=".4*"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width=".2*"/>
+                <ColumnDefinition Width=".4*"/>
             </Grid.ColumnDefinitions>
 
-            <Label BackgroundColor="Red" Grid.Row="0" Grid.Column="0"/>
-            <Label BackgroundColor="Red" Grid.Row="0" Grid.Column="1"/>
-            <Label BackgroundColor="Red" Grid.Row="0" Grid.Column="2"/>
-            <Label BackgroundColor="Red" Grid.Row="1" Grid.Column="0"/>
-            <Grid Grid.Row="1" Grid.Column="1">
-                <ContentView x:Name="mazeView"/>
+            <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
 
             </Grid>
-            <Label BackgroundColor="Red" Grid.Row="1" Grid.Column="2"/>
-            <Label BackgroundColor="Red" Grid.Row="2" Grid.Column="0"/>
-            <Label BackgroundColor="Red" Grid.Row="2" Grid.Column="1"/>
-            <Label BackgroundColor="Red" Grid.Row="2" Grid.Column="2"/>
+
+            <!--Ouput Text-->
+            <Grid Grid.Row="0" Grid.Column="1" BackgroundColor="Wheat">
+                <Label Text="OUTPUT" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+            </Grid>
+            <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
+
+
+            </Grid>
+
+            <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0"/>
+
+            <!--Maze Map-->
+            <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*,*" ColumnDefinitions="*,*,*" BackgroundColor="White">
+                <ContentView x:Name="mazeView"/>
+                <BoxView Grid.Row="0" Grid.Column="0" BackgroundColor="Red"/>
+                <BoxView Grid.Row="0" Grid.Column="1" BackgroundColor="Green"/>
+                <BoxView Grid.Row="0" Grid.Column="2" BackgroundColor="Blue"/>
+                <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Yellow"/>
+                <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Purple"/>
+                <BoxView Grid.Row="1" Grid.Column="2" BackgroundColor="Orange"/>
+                <BoxView Grid.Row="2" Grid.Column="0" BackgroundColor="Pink"/>
+                <BoxView Grid.Row="2" Grid.Column="1" BackgroundColor="Gray"/>
+                <BoxView Grid.Row="2" Grid.Column="2" BackgroundColor="Black"/>
+
+            </Grid>
+            <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="2"/>
+            <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="0"/>
+
+            <!--Start Button-->
+            <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="1">
+                <Button Text="START" FontSize="20" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
+            </Grid>
+            <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2"/>
 
         </Grid>
 
-        <!--BFS/DFS Choice-->
+        <!--BFS/DFS CHOICE-->
         <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height=".3*"/>
+                <RowDefinition />
                 <RowDefinition Height=".3*" />
                 <RowDefinition />
             </Grid.RowDefinitions>
@@ -86,14 +108,51 @@
 
         </Grid>
 
-        <!--Information-->
+        <!--INFORMATION-->
         <Grid  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Button Text="VISUALIZE" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White"/>
 
         </Grid>
-        <Label  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+
+        <!--Route and Nodes-->
+        <Grid RowSpacing="5" BackgroundColor="Wheat" Grid.Row="3" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".1*"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Type-->
+            <Label Grid.Row="0" Text="Route:" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label Grid.Row="1" Text="Nodes:" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+
+            <!--Ouput-->
+            <Label Grid.Row="0" Grid.Column="1" Text="Test" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" Padding="10" />
+            <Label Grid.Row="1" Grid.Column="1" Text="Test1 " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+        </Grid>
         <Label  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-        <Label  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+        <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--Type-->
+            <Label Grid.Row="0" Text="Steps : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label Grid.Row="1" Text="Execution Time : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+
+            <!--Ouput-->
+            <Label Grid.Row="0" Grid.Column="1" Text="Test " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label Grid.Row="1" Grid.Column="1" Text="Test1 " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+
+        </Grid>
     </Grid>
 
 </ContentPage>
