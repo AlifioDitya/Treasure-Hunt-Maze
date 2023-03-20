@@ -71,7 +71,7 @@ namespace BingChilling.Algorithms
             }
         }
 
-        public void SearchBack(int startX, int startY)
+        public override void SearchBack(int startX, int startY)
         {
             Stack<Node> stack = new Stack<Node>();
             Node startNode = new Node(startX, startY, null);

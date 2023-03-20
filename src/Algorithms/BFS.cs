@@ -72,7 +72,7 @@ namespace BingChilling.Algorithms
             }
         }
 
-        public void SearchBack(int startX, int startY)
+        public override void SearchBack(int startX, int startY)
         {
             Queue<Node> queue = new Queue<Node>();
             Node startNode = new Node(startX, startY, null);
