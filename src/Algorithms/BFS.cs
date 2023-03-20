@@ -32,6 +32,7 @@ namespace BingChilling.Algorithms
                         Console.WriteLine("Treasures Found: {0}", treasureNodes.Count);
                         Console.WriteLine("Path taken: ");
                         Console.WriteLine(currentNode.GetDirections(""));
+                        SearchBack(currentNode.X, currentNode.Y);
                         return;
                     }
                     else
@@ -67,6 +68,48 @@ namespace BingChilling.Algorithms
                 Console.WriteLine("Treasures Found: {0}", treasureNodes.Count);
                 Console.WriteLine("Path taken: ");
                 Console.WriteLine(treasureNodes.Last().GetDirections(""));
+                SearchBack(treasureNodes.Last().X, treasureNodes.Last().Y);
+            }
+        }
+
+        public void SearchBack(int startX, int startY)
+        {
+            Queue<Node> queue = new Queue<Node>();
+            Node startNode = new Node(startX, startY, null);
+            int[,] visited = new int[maze.Rows, maze.Cols];
+            queue.Enqueue(startNode);
+
+            Console.WriteLine();
+            Console.WriteLine("BFS traces way back...");
+            Console.WriteLine();
+
+            while (queue.Count > 0)
+            {
+                Node currentNode = queue.Dequeue();
+
+                if (currentNode.X == maze.StartRow && currentNode.Y == maze.StartCol)
+                {
+                    Console.WriteLine("Path taken: ");
+                    Console.WriteLine(currentNode.GetDirections(""));
+                    return;
+                } 
+                else
+                {
+                    // Mark the current node as visited
+                    visited[currentNode.X, currentNode.Y] = 1;
+
+                    // Generate all possible next moves
+                    List<Node> nextMoves = currentNode.GenerateNextMoves(maze);
+
+                    // Add each next move to the queue if it hasn't been visited before
+                    foreach (Node nextMove in nextMoves)
+                    {
+                        if (visited[nextMove.X, nextMove.Y] != 1)
+                        {
+                            queue.Enqueue(nextMove);
+                        }
+                    }
+                }
             }
         }
     }
