@@ -90,8 +90,8 @@ namespace BingChillingGUI
                 ColumnSpacing = 1,
                 RowSpacing = 1,
                 BackgroundColor = Color.FromRgb(255, 255, 255),
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                //VerticalOptions = LayoutOptions.FillAndExpand,
+               // HorizontalOptions = LayoutOptions.FillAndExpand,
                 
             };
             for (int i = 0; i < numberOfRows; i++)
@@ -138,21 +138,32 @@ namespace BingChillingGUI
 
 
 
-        // Helper method to get the background color for each element
-        private Color GetColorForElement(int element)
+        private async void visu_Clicked(object sender, EventArgs e)
         {
-            Color gray = Color.FromRgb(128, 128, 128);
-            switch (element)
-            {
-                case -1: // Wall
-                    return Color.FromRgb(128, 128, 128);
-                case 1: // Road
-                    return Color.FromRgb(255, 255, 255);
-                case 2: // Treasure
-                    return Color.FromRgb(255, 255, 0);
-                default: // Unknown element
-                    return Color.FromRgb(0, 0, 0);
+            if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked) {
+                await DisplayAlert("Error", "Please select only 1 checkbox to run the algorithm.", "OK");
             }
+            else if (bfsCheckBox.IsChecked)
+            {
+                // Run BFS algorithm
+                //BFS bfs = new BFS(maze);
+                //bfs.Search(startX, startY);
+                await DisplayAlert("BFS", "", "OK");
+            }
+            else if (dfsCheckBox.IsChecked)
+            {
+                // Run DFS algorithm
+                //DFS dfs = new DFS(maze);
+                //dfs.Search(startX, startY);
+                await DisplayAlert("DFS", "", "OK");
+            }
+            else
+            {
+                // No checkbox selected, show error message
+                await DisplayAlert("Error", "Please select a checkbox to run the algorithm.", "OK");
+                return;
+            }
+
         }
 
     }

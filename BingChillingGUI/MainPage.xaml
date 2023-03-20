@@ -94,14 +94,15 @@
             <Label Text="ALGORITMA" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.ColumnSpan="2"/>
             <Label Text="DFS" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="1" Grid.Column="0"/>
             <Label Text="BFS" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="2" Grid.Column="0"/>
-            <CheckBox Grid.Row="1" Color="Red" Grid.Column="1"></CheckBox>
-            <CheckBox Grid.Row="2" Color="Red" Grid.Column="1"></CheckBox>
+            <CheckBox x:Name="dfsCheckBox" Grid.Row="1" Color="Red" Grid.Column="1"></CheckBox>
+            <CheckBox x:Name="bfsCheckBox" Grid.Row="2" Color="Red" Grid.Column="1"></CheckBox>
+
 
         </Grid>
 
         <!--INFORMATION-->
         <Grid  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Button x:Name="visu" Text="VISUALIZE" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White"/>
+            <Button x:Name="visu" Text="VISUALIZE" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White" Clicked="visu_Clicked"/>
 
         </Grid>
 
