@@ -1,4 +1,6 @@
-﻿namespace BingChillingGUI
+﻿using Microsoft.Maui.Controls;
+
+namespace BingChillingGUI
 {
     public partial class MainPage : ContentPage
     {
@@ -20,7 +22,7 @@
                         using var stream = await result.OpenReadAsync();
                         using var reader = new StreamReader(stream);
                         int row = 0, col = 0;
-                        int[,] matrix = new int[5, 5]; // Fixed dimensions for the example maze
+                        int[,] matrix = new int[6, 6]; // Fixed dimensions for the example maze
 
                         string line;
                         while ((line = reader.ReadLine()) != null)
@@ -40,8 +42,16 @@
                             }
                             row++;
                         }
-                        
-                        DisplayMaze(matrix);
+
+                        for (int i = 0; i < matrix.GetLength(0); i++)
+                        {
+                            for (int j = 0; j < matrix.GetLength(1); j++)
+                            {
+                                Console.Write(matrix[i, j] + " ");
+                            }
+                            Console.WriteLine();
+                        }
+                        DisplayMaze(matrix, row, col);
                     }
                 }
 
@@ -52,10 +62,11 @@
             }
         }
 
-        private void DisplayMaze(int[,] matrix)
+        private void DisplayMaze(int[,] matrix, int numberOfRows, int numberOfColumns)
         {
-            
+
             // Create a new grid to hold the maze
+            var rowDefinitions = new RowDefinitionCollection();
             var grid = new Grid
             {
                 ColumnSpacing = 1,
@@ -63,19 +74,23 @@
                 BackgroundColor = Color.FromRgb(255, 255, 255),
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                RowDefinitions =
-                {
-                    new RowDefinition { Height = new GridLength(0.2, GridUnitType.Star) },
-                    new RowDefinition(),
-                    new RowDefinition { Height = new GridLength(0.2, GridUnitType.Star) }
-                },
-                        ColumnDefinitions =
-                {
-                    new ColumnDefinition { Width = new GridLength(0.2, GridUnitType.Star) },
-                    new ColumnDefinition(),
-                    new ColumnDefinition { Width = new GridLength(0.2, GridUnitType.Star) }
-                }
+                
             };
+            for (int i = 0; i < numberOfRows; i++)
+            {
+                rowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            }
+
+            var columnDefinitions = new ColumnDefinitionCollection();
+            for (int i = 0; i < numberOfColumns; i++)
+            {
+                columnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            }
+
+            // Create the Grid and set the RowDefinitions and ColumnDefinitions
+
+            grid.RowDefinitions = rowDefinitions;
+            grid.ColumnDefinitions = columnDefinitions;
 
             // Loop through the matrix and create a label for each element
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -85,8 +100,8 @@
                     // Create a new label for this element
                     var label = new Label
                     {
-                        Text = matrix[i, j] == 2 ? "Treasure" : "",
-                        TextColor = matrix[i, j] == 2 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
+                        Text = matrix[i, j] == 2 ? "Treasure" : matrix[i, j] == 0 ? "Start" : "",
+                        TextColor = matrix[i, j] == 2 ? Color.FromRgb(0, 0, 0) : matrix[i, j] == 0 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
                         BackgroundColor = matrix[i, j] == -1 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
