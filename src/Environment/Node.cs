@@ -29,10 +29,10 @@
         {
             List<Node> nextMoves = new List<Node>();
 
-            // Check up
-            if (x > 0 && maze[x - 1, Y] != 1)
+            // Check left
+            if (y > 0 && maze[x, y - 1] != 1)
             {
-                nextMoves.Add(new Node(x - 1, y, this));
+                nextMoves.Add(new Node(x, y - 1, this));
             }
 
             // Check down
@@ -41,37 +41,19 @@
                 nextMoves.Add(new Node(x + 1, y, this));
             }
 
-            // Check left
-            if (y > 0 && maze[x, y - 1] != 1)
-            {
-                nextMoves.Add(new Node(x, y - 1, this));
-            }
-
             // Check right
             if (y < maze.Cols - 1 && maze[x, y + 1] != 1)
             {
                 nextMoves.Add(new Node(x, y + 1, this));
             }
 
+            // Check up
+            if (x > 0 && maze[x - 1, Y] != 1)
+            {
+                nextMoves.Add(new Node(x - 1, y, this));
+            }
+
             return nextMoves;
-        }
-
-        public void PrintPath()
-        {
-            if (this == null)
-            {
-                return;
-            }
-
-            if (parent == null)
-            {
-                Console.WriteLine("({0}, {1})", x, y);
-            }
-            else
-            {
-                parent.PrintPath();
-                Console.WriteLine("({0}, {1})", x, y);
-            }
         }
 
         public string GetDirections(string currPath)
@@ -97,6 +79,27 @@
             {
                 return parent.GetDirections("R " + currPath);
             }
+        }
+
+        public List<Node> ListPath()
+        {
+            List<Node> path = new List<Node>();
+            Node? currentNode = this;
+
+            while (currentNode != null)
+            {
+                path.Add(currentNode);
+                currentNode = currentNode.Parent;
+            }
+
+            path.Reverse();
+            return path;
+        }
+
+        public Node? Parent
+        {
+            get { return parent; }
+            set { parent = value; }
         }
     }
 }

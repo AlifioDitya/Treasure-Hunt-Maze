@@ -88,6 +88,10 @@ namespace BingChilling.Environment
                     {
                         Console.Write("X");
                     }
+                    else if (_grid[i, j] == -1)
+                    {
+                        Console.Write("*");
+                    }
                     else
                     {
                         Console.Write(".");
