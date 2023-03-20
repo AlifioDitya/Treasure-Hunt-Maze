@@ -64,7 +64,7 @@
             }
 
             if (parent == null)
-            {
+            { 
                 Console.WriteLine("({0}, {1})", x, y);
             }
             else
@@ -83,19 +83,19 @@
 
             if (x < parent.X)
             {
-                return parent.GetDirections("U " + currPath);
+                return parent.GetDirections("U" + currPath);
             }
             else if (x > parent.X)
             {
-                return parent.GetDirections("D " + currPath);
+                return parent.GetDirections("D" + currPath);
             }
             else if (y < parent.Y)
             {
-                return parent.GetDirections("L " + currPath);
+                return parent.GetDirections("L" + currPath);
             }
             else
             {
-                return parent.GetDirections("R " + currPath);
+                return parent.GetDirections("R" + currPath);
             }
         }
     }

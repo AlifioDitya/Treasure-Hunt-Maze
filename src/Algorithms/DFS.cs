@@ -30,7 +30,7 @@ namespace BingChilling.Algorithms
                         Console.WriteLine();
                         Console.WriteLine("Treasures Found: {0}", treasureNodes.Count);
                         Console.WriteLine("Path taken: ");
-                        currentNode.PrintPath();
+                        Console.WriteLine(currentNode.GetDirections(""));
                         return;
                     }
                     else
@@ -65,7 +65,7 @@ namespace BingChilling.Algorithms
                 Console.WriteLine();
                 Console.WriteLine("Treasures Found: {0}", treasureNodes.Count);
                 Console.WriteLine("Path taken: ");
-                treasureNodes.Last().PrintPath();
+                Console.WriteLine(treasureNodes.Last().GetDirections(""));
             }
         }
     }

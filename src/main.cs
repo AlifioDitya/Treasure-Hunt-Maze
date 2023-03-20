@@ -12,19 +12,19 @@ namespace BingChilling
             int startY = 0;
 
             // Create empty maze
-            Maze maze = new Maze(0, 0, startX, startY);
+            Maze maze = new Maze(0, 0);
 
             // Load maze
             maze.Load(@"C:\\Users\\Fio\\source\\repos\\BingChilling\\Tubes2_BingChilling\\src\\maze.txt");
 
             // Search with BFS
             BFS bfs = new BFS(maze);
-            bfs.Search(startX, startY);
+            bfs.Search(maze.StartRow, maze.StartCol);
             Console.WriteLine();
 
             // Search with DFS
             DFS dfs = new DFS(maze);
-            dfs.Search(startX, startY);
+            dfs.Search(maze.StartRow, maze.StartCol);
             Console.ReadLine();
         }
     }
