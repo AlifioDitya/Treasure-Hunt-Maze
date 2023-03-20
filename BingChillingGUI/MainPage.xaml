@@ -66,15 +66,6 @@
             <!--Maze Map-->
             <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*,*" ColumnDefinitions="*,*,*" BackgroundColor="White">
                 <ContentView x:Name="mazeView"/>
-                <BoxView Grid.Row="0" Grid.Column="0" BackgroundColor="Red"/>
-                <BoxView Grid.Row="0" Grid.Column="1" BackgroundColor="Green"/>
-                <BoxView Grid.Row="0" Grid.Column="2" BackgroundColor="Blue"/>
-                <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Yellow"/>
-                <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Purple"/>
-                <BoxView Grid.Row="1" Grid.Column="2" BackgroundColor="Orange"/>
-                <BoxView Grid.Row="2" Grid.Column="0" BackgroundColor="Pink"/>
-                <BoxView Grid.Row="2" Grid.Column="1" BackgroundColor="Gray"/>
-                <BoxView Grid.Row="2" Grid.Column="2" BackgroundColor="Black"/>
 
             </Grid>
             <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="2"/>
@@ -82,7 +73,7 @@
 
             <!--Start Button-->
             <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="1">
-                <Button Text="START" FontSize="20" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
+                <Button x:Name="start" Text="START" FontSize="20" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
             </Grid>
             <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2"/>
 
@@ -110,7 +101,7 @@
 
         <!--INFORMATION-->
         <Grid  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Button Text="VISUALIZE" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White"/>
+            <Button x:Name="visu" Text="VISUALIZE" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White"/>
 
         </Grid>
 

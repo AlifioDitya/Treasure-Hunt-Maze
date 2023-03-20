@@ -19,12 +19,30 @@ namespace BingChillingGUI
                 {
                     if (result.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                     {
+                        using var ctrstream = await result.OpenReadAsync();
+                        using var ctrreader = new StreamReader(ctrstream);
+                        int row = 0, col = 0;
+                        //int[,] matrix = new int[6, 6]; // Fixed dimensions for the example maze
+
+                        string ctrline;
+                        while ((ctrline = ctrreader.ReadLine()) != null)
+                        {
+                            col = 0;
+                            foreach (char c in ctrline)
+                            {
+                                col++;
+                            }
+                            row++;
+                        }
+
+                        int[,] matrix = new int[row, col];
+
+                        row = 0;
+
                         using var stream = await result.OpenReadAsync();
                         using var reader = new StreamReader(stream);
-                        int row = 0, col = 0;
-                        int[,] matrix = new int[6, 6]; // Fixed dimensions for the example maze
-
                         string line;
+
                         while ((line = reader.ReadLine()) != null)
                         {
                             col = 0;
