@@ -14,6 +14,8 @@
 		<!-- Display name -->
 		<ApplicationTitle>BingChillingGUI</ApplicationTitle>
 
+		<ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.bingchillinggui</ApplicationId>
 		<ApplicationIdGuid>8c7b2326-c64d-4ca7-96d9-3cc8cb27c828</ApplicationIdGuid>
@@ -55,4 +57,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\src\BingChilling.csproj" />
+	</ItemGroup>
 </Project>

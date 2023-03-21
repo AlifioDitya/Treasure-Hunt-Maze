@@ -140,14 +140,18 @@ namespace BingChillingGUI
 
         private async void visu_Clicked(object sender, EventArgs e)
         {
-            if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked) {
+            int startX = 0;
+            int startY = 0;
+            BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0, startX, startY);
+            if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
+            {
                 await DisplayAlert("Error", "Please select only 1 checkbox to run the algorithm.", "OK");
             }
             else if (bfsCheckBox.IsChecked)
             {
-                // Run BFS algorithm
-                //BFS bfs = new BFS(maze);
-                //bfs.Search(startX, startY);
+                //Run BFS algorithm
+                BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
+                bfs.Search(startX, startY);
                 await DisplayAlert("BFS", "", "OK");
             }
             else if (dfsCheckBox.IsChecked)
