@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using BingChilling.Environment;
+using Microsoft.Maui.Controls;
 
 namespace BingChillingGUI
 {
@@ -140,26 +141,25 @@ namespace BingChillingGUI
 
         private async void visu_Clicked(object sender, EventArgs e)
         {
-            int startX = 0;
-            int startY = 0;
-            BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0, startX, startY);
+            BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
             if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
             {
                 await DisplayAlert("Error", "Please select only 1 checkbox to run the algorithm.", "OK");
             }
             else if (bfsCheckBox.IsChecked)
             {
+                await DisplayAlert("BFS", "", "OK");
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
-                bfs.Search(startX, startY);
-                await DisplayAlert("BFS", "", "OK");
+                List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
             }
             else if (dfsCheckBox.IsChecked)
             {
-                // Run DFS algorithm
-                //DFS dfs = new DFS(maze);
-                //dfs.Search(startX, startY);
                 await DisplayAlert("DFS", "", "OK");
+                // Run DFS algorithm
+                BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
+                List<Node> bfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                
             }
             else
             {
