@@ -1,5 +1,6 @@
 ﻿using BingChilling.Environment;
 using Microsoft.Maui.Controls;
+using System.Linq;
 //using static Android.InputMethodServices.Keyboard;
 
 
@@ -13,6 +14,7 @@ namespace BingChillingGUI
         }
 
         private string filePath;
+        private int[,] maze;
         private async void Button_Clicked(object sender, EventArgs e)
         {
             PickOptions options = new PickOptions();
@@ -75,6 +77,7 @@ namespace BingChillingGUI
                             }
                             Console.WriteLine();
                         }
+                        this.maze = matrix;
                         DisplayMaze(matrix, row, col);
                     }
                 }
@@ -124,9 +127,11 @@ namespace BingChillingGUI
                     // Create a new label for this element
                     var label = new Label
                     {
-                        Text = matrix[i, j] == 2 ? "Treasure" : matrix[i, j] == 0 ? "Start" : "",
-                        TextColor = matrix[i, j] == 2 ? Color.FromRgb(0, 0, 0) : matrix[i, j] == 0 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
-                        BackgroundColor = matrix[i, j] == -1 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
+                        Text = matrix[i, j] == 2 || matrix[i, j] == 5 ? "Treasure" : matrix[i, j] == 0 || matrix[i, j] == 3 ? "Start" : "",
+                        TextColor = matrix[i, j] == 0 || matrix[i, j] == 2 || matrix[i, j] == 3 || matrix[i, j] == 5 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
+                        BackgroundColor = matrix[i, j] == -1 ? Color.FromRgb(0, 0, 0)
+                                         : matrix[i, j] == 3 || matrix[i, j] == 4 || matrix[i, j] == 5 ? Color.FromRgb(0, 255, 0)
+                                         : Color.FromRgb(255, 255, 255),
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
                     };
@@ -148,6 +153,7 @@ namespace BingChillingGUI
         {
             BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
             maze.Load(this.filePath);
+            int[,] matrix = new int[maze.Rows, maze.Cols];
             if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
             {
                 await DisplayAlert("Error", "Please select only 1 checkbox to run the algorithm.", "OK");
@@ -158,19 +164,24 @@ namespace BingChillingGUI
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
-                Console.WriteLine();
-
-                if (bfsPath.Count > 0)
-                {
-                    Console.WriteLine("BFS Path: ");
-                    for (int i = 0; i < bfsPath.Count; i++)
+                
+                int index = 0;
+                while(index < bfsPath.Count) {
+                    if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 0)
                     {
-                        Console.WriteLine("({0}, {1})", bfsPath[i].X, bfsPath[i].Y);
+                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 3;
                     }
-                    Console.WriteLine();
+                    else if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 1)
+                    {
+                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 4;
+                    }
+                    else if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 2)
+                    {
+                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 5;
+                    }
+                    index++;
                 }
-
-
+                DisplayMaze(this.maze, maze.Rows, maze.Cols);
             }
             else if (dfsCheckBox.IsChecked)
             {
@@ -180,15 +191,24 @@ namespace BingChillingGUI
                 List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
                 Console.WriteLine();
 
-                if (dfsPath.Count > 0)
+                int index = 0;
+                while (index < dfsPath.Count)
                 {
-                    Console.WriteLine("DFS Path: ");
-                    for (int i = 0; i < dfsPath.Count; i++)
+                    if (this.maze[dfsPath[index].X, dfsPath[index].Y] == 0)
                     {
-                        Console.WriteLine("({0}, {1})", dfsPath[i].X, dfsPath[i].Y);
+                        this.maze[dfsPath[index].X, dfsPath[index].Y] = 3;
                     }
+                    else if (this.maze[dfsPath[index].X, dfsPath[index].Y] == 1)
+                    {
+                        this.maze[dfsPath[index].X, dfsPath[index].Y] = 4;
+                    }
+                    else if (this.maze[dfsPath[index].X, dfsPath[index].Y] == 2)
+                    {
+                        this.maze[dfsPath[index].X, dfsPath[index].Y] = 5;
+                    }
+                    index++;
                 }
-
+                DisplayMaze(this.maze, maze.Rows, maze.Cols);
             }
             else
             {
