@@ -64,7 +64,7 @@
             <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0"/>
 
             <!--Maze Map-->
-            <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*,*" ColumnDefinitions="*,*,*" BackgroundColor="White">
+            <Grid Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
                 <ContentView x:Name="mazeView"/>
 
             </Grid>

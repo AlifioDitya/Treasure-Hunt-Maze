@@ -1,5 +1,7 @@
 ﻿using BingChilling.Environment;
 using Microsoft.Maui.Controls;
+//using static Android.InputMethodServices.Keyboard;
+
 
 namespace BingChillingGUI
 {
@@ -10,6 +12,7 @@ namespace BingChillingGUI
             InitializeComponent();
         }
 
+        private string filePath;
         private async void Button_Clicked(object sender, EventArgs e)
         {
             PickOptions options = new PickOptions();
@@ -20,6 +23,7 @@ namespace BingChillingGUI
                 {
                     if (result.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                     {
+                        this.filePath = result.FullPath;
                         using var ctrstream = await result.OpenReadAsync();
                         using var ctrreader = new StreamReader(ctrstream);
                         int row = 0, col = 0;
@@ -37,6 +41,7 @@ namespace BingChillingGUI
                         }
 
                         int[,] matrix = new int[row, col];
+                       
 
                         row = 0;
 
@@ -142,24 +147,48 @@ namespace BingChillingGUI
         private async void visu_Clicked(object sender, EventArgs e)
         {
             BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
+            maze.Load(this.filePath);
             if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
             {
                 await DisplayAlert("Error", "Please select only 1 checkbox to run the algorithm.", "OK");
             }
             else if (bfsCheckBox.IsChecked)
             {
-                await DisplayAlert("BFS", "", "OK");
+                //await DisplayAlert("BFS", "", "OK");
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                Console.WriteLine();
+
+                if (bfsPath.Count > 0)
+                {
+                    Console.WriteLine("BFS Path: ");
+                    for (int i = 0; i < bfsPath.Count; i++)
+                    {
+                        Console.WriteLine("({0}, {1})", bfsPath[i].X, bfsPath[i].Y);
+                    }
+                    Console.WriteLine();
+                }
+
+
             }
             else if (dfsCheckBox.IsChecked)
             {
-                await DisplayAlert("DFS", "", "OK");
+                //await DisplayAlert("DFS", "", "OK");
                 // Run DFS algorithm
                 BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
-                List<Node> bfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
-                
+                List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                Console.WriteLine();
+
+                if (dfsPath.Count > 0)
+                {
+                    Console.WriteLine("DFS Path: ");
+                    for (int i = 0; i < dfsPath.Count; i++)
+                    {
+                        Console.WriteLine("({0}, {1})", dfsPath[i].X, dfsPath[i].Y);
+                    }
+                }
+
             }
             else
             {
