@@ -11,6 +11,8 @@ namespace BingChillingGUI
         public MainPage()
         {
             InitializeComponent();
+            //startlabel.Clicked += mazeSlider;
+            
         }
 
         private string filePath;
@@ -29,6 +31,8 @@ namespace BingChillingGUI
                         this.filePath = result.FullPath;
                         using var ctrstream = await result.OpenReadAsync();
                         using var ctrreader = new StreamReader(ctrstream);
+                        
+
                         int row = 0, col = 0;
                         //int[,] matrix = new int[6, 6]; // Fixed dimensions for the example maze
 
@@ -128,10 +132,11 @@ namespace BingChillingGUI
                     // Create a new label for this element
                     var label = new Label
                     {
-                        Text = matrix[i, j] == 2 || matrix[i, j] == 5 ? "Treasure" : matrix[i, j] == 0 || matrix[i, j] == 3 ? "Start" : "",
+                        Text = matrix[i, j] == 2 || matrix[i, j] == 5 || matrix[i, j] == 8 ? "Treasure" : matrix[i, j] == 0 || matrix[i, j] == 3 || matrix[i, j] == 6 ? "Start" : "",
                         TextColor = matrix[i, j] == 0 || matrix[i, j] == 2 || matrix[i, j] == 3 || matrix[i, j] == 5 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
                         BackgroundColor = matrix[i, j] == -1 ? Color.FromRgb(0, 0, 0)
                                          : matrix[i, j] == 3 || matrix[i, j] == 4 || matrix[i, j] == 5 ? Color.FromRgb(0, 255, 0)
+                                         : matrix[i, j] == 6 || matrix[i, j] == 7 || matrix[i, j] == 8 ? Color.FromRgb(255, 0, 0)
                                          : Color.FromRgb(255, 255, 255),
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
@@ -168,22 +173,45 @@ namespace BingChillingGUI
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
                 
                 int index = 0;
+                int count = 0;
                 while(index < bfsPath.Count) {
+                    if(count > 0) {
+                        if (this.maze[bfsPath[index-1].X, bfsPath[index-1].Y] == 6)
+                        {
+                            this.maze[bfsPath[index-1].X, bfsPath[index-1].Y] = 3;
+                        }
+                        else if (this.maze[bfsPath[index-1].X, bfsPath[index-1].Y] == 7)
+                        {
+                            this.maze[bfsPath[index-1].X, bfsPath[index-1].Y] = 4;
+                        }
+                        else if (this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] == 8)
+                        {
+                            this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] = 5;
+                        }
+                        
+                        await DisplayMaze(this.maze, maze.Rows, maze.Cols);
+                    }
+                    //searching this index
                     if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 0)
                     {
-                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 3;
+                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 6;
                     }
                     else if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 1)
                     {
-                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 4;
+                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 7;
                     }
-                    else if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 2)
+                    else if (this.maze[bfsPath[index - 1].X, bfsPath[index].Y] == 2)
                     {
-                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 5;
+                        this.maze[bfsPath[index].X, bfsPath[index].Y] = 8;
                     }
                     index++;
                     await DisplayMaze(this.maze, maze.Rows, maze.Cols);
+                    if (count == 0) {
+                        count++;
+                    }
+                        
                     
+                      
                 }
                 //DisplayMaze(this.maze, maze.Rows, maze.Cols);
             }
@@ -212,7 +240,7 @@ namespace BingChillingGUI
                     }
                     index++;
                 }
-                DisplayMaze(this.maze, maze.Rows, maze.Cols);
+                await DisplayMaze(this.maze, maze.Rows, maze.Cols);
             }
             else
             {
@@ -226,8 +254,9 @@ namespace BingChillingGUI
         void mazeSlider(System.Object sender, Microsoft.Maui.Controls.ValueChangedEventArgs e)
         {
             int value = (int)e.NewValue;
-            startlabel.Text = String.Format("The Slider value is {0}", value);
+            //startlabel.Text = String.Format("The Slider value is {0}", value);
             this.sliderValue = value;
+            
         }
     }
 }
