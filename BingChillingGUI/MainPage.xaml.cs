@@ -215,7 +215,7 @@ namespace BingChillingGUI
                     {
                         this.maze[bfsPath[index].X, bfsPath[index].Y] = 7;
                     }
-                    else if (this.maze[bfsPath[index - 1].X, bfsPath[index].Y] == 2)
+                    else if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 2)
                     {
                         this.maze[bfsPath[index].X, bfsPath[index].Y] = 8;
                     }
