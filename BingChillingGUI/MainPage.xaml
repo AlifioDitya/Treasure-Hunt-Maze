@@ -49,7 +49,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
-
+                
             </Grid>
 
             <!--Ouput Text-->
@@ -61,7 +61,10 @@
 
             </Grid>
 
-            <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0"/>
+            <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0">
+                
+
+            </Grid>
 
             <!--Maze Map-->
             <Grid x:Name="mazeGrid" Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
@@ -76,7 +79,7 @@
                 <Slider Maximum="1000" ValueChanged="mazeSlider"/>
             </Grid>
             <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2">
-
+                <Button Text="RESET" TextColor="Black" Background="white" WidthRequest="100" HeightRequest="10" Clicked="ResetButton" BackgroundColor="Wheat"/>
             </Grid>
 
         </Grid>

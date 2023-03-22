@@ -100,9 +100,9 @@ namespace BingChillingGUI
 
         private async Task DisplayMaze(int[,] matrix, int numberOfRows, int numberOfColumns)
         {
-
             // Create a new grid to hold the maze
             var rowDefinitions = new RowDefinitionCollection();
+
             var grid = new Grid
             {
                 ColumnSpacing = 1,
@@ -124,7 +124,6 @@ namespace BingChillingGUI
             }
 
             // Create the Grid and set the RowDefinitions and ColumnDefinitions
-
             grid.RowDefinitions = rowDefinitions;
             grid.ColumnDefinitions = columnDefinitions;
 
@@ -166,7 +165,13 @@ namespace BingChillingGUI
 
             int steps = 0;
             BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
-            maze.Load(this.filePath);
+            try {
+                maze.Load(this.filePath);
+            }
+            catch (FileNotFoundException) {
+                await DisplayAlert("Error", "Please select a file.", "OK");
+            }
+            
             int[,] matrix = new int[maze.Rows, maze.Cols];
             if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
             {
@@ -285,6 +290,10 @@ namespace BingChillingGUI
             int value = (int)e.NewValue;
             this.sliderValue = value;
             
+        }
+        private void ResetButton(object sender, EventArgs e)
+        {
+            mazeView.Content = null;
         }
     }
 }
