@@ -15,6 +15,7 @@ namespace BingChillingGUI
 
         private string filePath;
         private int[,] maze;
+        private int sliderValue;
         private async void Button_Clicked(object sender, EventArgs e)
         {
             PickOptions options = new PickOptions();
@@ -78,7 +79,7 @@ namespace BingChillingGUI
                             Console.WriteLine();
                         }
                         this.maze = matrix;
-                        DisplayMaze(matrix, row, col);
+                        await DisplayMaze(matrix, row, col);
                     }
                 }
 
@@ -145,7 +146,7 @@ namespace BingChillingGUI
 
             // Set the content of the mazeView to the grid
             mazeView.Content = grid;
-            await Task.Delay(0);
+            await Task.Delay(this.sliderValue);
         }
 
 
@@ -222,5 +223,11 @@ namespace BingChillingGUI
 
         }
 
+        void mazeSlider(System.Object sender, Microsoft.Maui.Controls.ValueChangedEventArgs e)
+        {
+            int value = (int)e.NewValue;
+            startlabel.Text = String.Format("The Slider value is {0}", value);
+            this.sliderValue = value;
+        }
     }
 }

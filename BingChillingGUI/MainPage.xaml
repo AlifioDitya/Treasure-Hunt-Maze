@@ -71,9 +71,10 @@
             <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="2"/>
             <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="0"/>
 
-            <!--Start Button-->
+            <!--Slider-->
             <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="1">
-                <Button x:Name="start" Text="START" FontSize="20" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" />
+                <Slider Maximum="1000" ValueChanged="mazeSlider"/>
+                <Label x:Name="startlabel" Text="START" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
             </Grid>
             <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2"/>
 
