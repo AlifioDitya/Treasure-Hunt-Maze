@@ -11,11 +11,11 @@ namespace BingChilling
             Maze maze = new Maze(0, 0);
 
             // Load maze
-            maze.Load(@"/Users/irsyadnb/Downloads/ITB Jaya/SMT 4/STIMA/Tubes2_BingChilling/src/maze.txt");
+            maze.Load(@"C:\Users\Fio\source\repos\Tubes2_RealBingChilling\src\maze.txt");
 
             // Search with BFS
             BFS bfs = new BFS(maze);
-            List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
+            List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
             Console.WriteLine();
 
             if (bfsPath.Count > 0)
@@ -30,7 +30,7 @@ namespace BingChilling
 
             // Search with DFS
             DFS dfs = new DFS(maze);
-            List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
+            List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
             Console.WriteLine();
 
             if (dfsPath.Count > 0)

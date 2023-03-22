@@ -58,7 +58,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\src\BingChilling.csproj" />
 	  <ProjectReference Include="..\src\BingChillingConsole.csproj" />
 	</ItemGroup>
 </Project>

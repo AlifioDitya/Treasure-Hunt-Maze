@@ -6,7 +6,7 @@ namespace BingChilling.Algorithms
     {
         public DFS(Maze maze) : base(maze) { }
 
-        public override List<Node> SearchTreasures(int startX, int startY)
+        public override List<Node> SearchTreasures(int startX, int startY, bool tsp=false)
         {
             Stack<Node> stack = new Stack<Node>();
             Node startNode = new Node(startX, startY, null);
@@ -30,11 +30,18 @@ namespace BingChilling.Algorithms
                     {
                         Console.WriteLine();
                         Console.WriteLine("Treasures Found: {0}", treasureNodes.Count);
+
+                        if (tsp)
+                        {
+                            fullPath = fullPath.Concat(SearchPathBack(currentNode)).ToList();
+                        }
+                        else
+                        {
+                            fullPath = fullPath.Concat(currentNode.ListPath()).ToList();
+                        }
+
                         Console.WriteLine("Path taken: ");
-                        Console.WriteLine(currentNode.GetDirections(""));
-                        fullPath = fullPath.Concat(currentNode.ListPath()).ToList();
-                        fullPath.RemoveAt(fullPath.Count - 1);
-                        fullPath = fullPath.Concat(SearchPathBack(currentNode.X, currentNode.Y)).ToList();
+                        Console.WriteLine(fullPath.Last().GetDirections(""));
                         return fullPath;
                     }
                     else
@@ -68,20 +75,26 @@ namespace BingChilling.Algorithms
             {
                 Console.WriteLine();
                 Console.WriteLine("Treasures Found: {0}", treasureNodes.Count);
+
+                if (tsp)
+                {
+                    fullPath = fullPath.Concat(SearchPathBack(treasureNodes.Last())).ToList();
+                }
+                else
+                {
+                    fullPath = fullPath.Concat(treasureNodes.Last().ListPath()).ToList();
+                }
+
                 Console.WriteLine("Path taken: ");
-                Console.WriteLine(treasureNodes.Last().GetDirections(""));
-                fullPath = fullPath.Concat(treasureNodes.Last().ListPath()).ToList();
-                fullPath.RemoveAt(fullPath.Count - 1);
-                fullPath = fullPath.Concat(SearchPathBack(treasureNodes.Last().X, treasureNodes.Last().Y)).ToList();
+                Console.WriteLine(fullPath.Last().GetDirections(""));
             }
 
             return fullPath;
         }
 
-        public override List<Node> SearchPathBack(int startX, int startY)
+        public override List<Node> SearchPathBack(Node startNode)
         {
             Stack<Node> stack = new Stack<Node>();
-            Node startNode = new Node(startX, startY, null);
             visited = new int[maze.Rows, maze.Cols];
             Node currentNode = startNode;
             stack.Push(startNode);
@@ -96,8 +109,6 @@ namespace BingChilling.Algorithms
 
                 if (currentNode.X == maze.StartRow && currentNode.Y == maze.StartCol)
                 {
-                    Console.WriteLine("Path taken: ");
-                    Console.WriteLine(currentNode.GetDirections(""));
                     return currentNode.ListPath();
                 }
                 else
