@@ -89,7 +89,7 @@ namespace BingChillingGUI
             }
         }
 
-        private void DisplayMaze(int[,] matrix, int numberOfRows, int numberOfColumns)
+        private async Task DisplayMaze(int[,] matrix, int numberOfRows, int numberOfColumns)
         {
 
             // Create a new grid to hold the maze
@@ -145,6 +145,7 @@ namespace BingChillingGUI
 
             // Set the content of the mazeView to the grid
             mazeView.Content = grid;
+            await Task.Delay(0);
         }
 
 
@@ -180,8 +181,10 @@ namespace BingChillingGUI
                         this.maze[bfsPath[index].X, bfsPath[index].Y] = 5;
                     }
                     index++;
+                    await DisplayMaze(this.maze, maze.Rows, maze.Cols);
+                    
                 }
-                DisplayMaze(this.maze, maze.Rows, maze.Cols);
+                //DisplayMaze(this.maze, maze.Rows, maze.Cols);
             }
             else if (dfsCheckBox.IsChecked)
             {
