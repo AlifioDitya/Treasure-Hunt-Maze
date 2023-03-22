@@ -64,7 +64,7 @@
             <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0"/>
 
             <!--Maze Map-->
-            <Grid Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
+            <Grid x:Name="mazeGrid" Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
                 <ContentView x:Name="mazeView"/>
 
             </Grid>
@@ -75,7 +75,9 @@
             <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="1">
                 <Slider Maximum="1000" ValueChanged="mazeSlider"/>
             </Grid>
-            <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2"/>
+            <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2">
+
+            </Grid>
 
         </Grid>
 
@@ -123,9 +125,13 @@
 
             <!--Ouput-->
             <Label Grid.Row="0" Grid.Column="1" Text="Test" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" Padding="10" />
-            <Label Grid.Row="1" Grid.Column="1" Text="Test1 " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label x:Name="nodesCounter" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
         </Grid>
-        <Label  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+
+        <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+        </Grid>
+
         <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -141,8 +147,8 @@
             <Label Grid.Row="1" Text="Execution Time : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
 
             <!--Ouput-->
-            <Label Grid.Row="0" Grid.Column="1" Text="Test " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
-            <Label Grid.Row="1" Grid.Column="1" Text="Test1 " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label x:Name="stepsInfo" Grid.Row="0" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label x:Name="executionTime" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
 
         </Grid>
     </Grid>
