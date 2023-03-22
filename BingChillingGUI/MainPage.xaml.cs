@@ -1,6 +1,9 @@
 ﻿using BingChilling.Environment;
 using Microsoft.Maui.Controls;
 using System.Linq;
+using System;
+using System.Diagnostics;
+using System.Threading;
 //using static Android.InputMethodServices.Keyboard;
 
 
@@ -153,16 +156,22 @@ namespace BingChillingGUI
 
         private async void visu_Clicked(object sender, EventArgs e)
         {
+            Stopwatch stopwatch = new Stopwatch();
+
+            int steps = 0;
             BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
             maze.Load(this.filePath);
             int[,] matrix = new int[maze.Rows, maze.Cols];
             if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
             {
                 await DisplayAlert("Error", "Please select only 1 checkbox to run the algorithm.", "OK");
+                stopwatch.Start();
+                stopwatch.Stop();
             }
             else if (bfsCheckBox.IsChecked)
             {
                 //await DisplayAlert("BFS", "", "OK");
+                stopwatch.Start();
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
@@ -185,11 +194,15 @@ namespace BingChillingGUI
                     await DisplayMaze(this.maze, maze.Rows, maze.Cols);
                     
                 }
+                steps = bfsPath.Count;
                 //DisplayMaze(this.maze, maze.Rows, maze.Cols);
+
+                stopwatch.Stop();
             }
             else if (dfsCheckBox.IsChecked)
             {
                 //await DisplayAlert("DFS", "", "OK");
+                stopwatch.Start();
                 // Run DFS algorithm
                 BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
                 List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
@@ -212,14 +225,25 @@ namespace BingChillingGUI
                     }
                     index++;
                 }
-                DisplayMaze(this.maze, maze.Rows, maze.Cols);
+                steps = dfsPath.Count;
+                await DisplayMaze(this.maze, maze.Rows, maze.Cols);
+
+                stopwatch.Stop();
             }
             else
             {
+                stopwatch.Start();
+                stopwatch.Stop();
                 // No checkbox selected, show error message
                 await DisplayAlert("Error", "Please select a checkbox to run the algorithm.", "OK");
                 return;
             }
+
+            executionTime.Text = $"{stopwatch.ElapsedMilliseconds} ms";
+            nodesCounter.Text = $"{steps}";
+            SemanticScreenReader.Announce(nodesCounter.Text);
+            SemanticScreenReader.Announce(executionTime.Text);
+
 
         }
 
