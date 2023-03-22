@@ -170,6 +170,7 @@ namespace BingChillingGUI
             }
             catch (FileNotFoundException) {
                 await DisplayAlert("Error", "Please select a file.", "OK");
+                return;
             }
             
             int[,] matrix = new int[maze.Rows, maze.Cols];
@@ -232,8 +233,17 @@ namespace BingChillingGUI
                 //DisplayMaze(this.maze, maze.Rows, maze.Cols);
 
                 stopwatch.Stop();
-                routeInfo.Text = bfsPath.Last().GetDirections("");
-                stepsInfo.Text = $"{bfsPath.Count() - 1}";
+
+                if (bfsPath.Count() > 0)
+                {
+                    routeInfo.Text = bfsPath.Last().GetDirections("");
+                    stepsInfo.Text = $"{bfsPath.Count() - 1}";
+                }
+                else
+                {
+                    routeInfo.Text = "";
+                    stepsInfo.Text = "0";
+                }
             }
             else if (dfsCheckBox.IsChecked)
             {
@@ -268,8 +278,16 @@ namespace BingChillingGUI
                 
 
                 stopwatch.Stop();
-                routeInfo.Text = dfsPath.Last().GetDirections("");
-                stepsInfo.Text = $"{dfsPath.Count() - 1}";
+                if (dfsPath.Count() > 0)
+                {
+                    routeInfo.Text = dfsPath.Last().GetDirections("");
+                    stepsInfo.Text = $"{dfsPath.Count() - 1}";
+                }
+                else
+                {
+                    routeInfo.Text = "";
+                    stepsInfo.Text = "0";
+                }
             }
             else
             {
