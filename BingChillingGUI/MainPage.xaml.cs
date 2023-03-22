@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using System.Diagnostics;
 using System.Threading;
+//using Microsoft.Maui.Controls.Compatibility;
 //using static Android.InputMethodServices.Keyboard;
 
 
@@ -250,7 +251,6 @@ namespace BingChillingGUI
         void mazeSlider(System.Object sender, Microsoft.Maui.Controls.ValueChangedEventArgs e)
         {
             int value = (int)e.NewValue;
-            startlabel.Text = String.Format("The Slider value is {0}", value);
             this.sliderValue = value;
         }
     }

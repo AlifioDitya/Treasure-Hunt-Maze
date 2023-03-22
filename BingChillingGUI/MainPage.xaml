@@ -64,7 +64,7 @@
             <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0"/>
 
             <!--Maze Map-->
-            <Grid Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
+            <Grid x:Name="mazeGrid" Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
                 <ContentView x:Name="mazeView"/>
 
             </Grid>
@@ -76,7 +76,9 @@
                 <Slider Maximum="1000" ValueChanged="mazeSlider"/>
                 <Label x:Name="startlabel" Text="START" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
             </Grid>
-            <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2"/>
+            <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2">
+
+            </Grid>
 
         </Grid>
 
@@ -126,7 +128,11 @@
             <Label Grid.Row="0" Grid.Column="1" Text="Test" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" Padding="10" />
             <Label x:Name="nodesCounter" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
         </Grid>
-        <Label  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+
+        <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+        </Grid>
+
         <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition />
