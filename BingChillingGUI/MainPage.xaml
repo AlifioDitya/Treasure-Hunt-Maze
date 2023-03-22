@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BingChillingGUI.MainPage">
+    <Grid ColumnSpacing="10" RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".4*"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height=".4*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+
+        </Grid.ColumnDefinitions>
+        <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="4">
+            <Label Text="TREASURE HUNT SOLVER" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+
+        <!--INPUT FILE-->
+        <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+
+
+            </Grid.ColumnDefinitions>
+            <Label Text="INPUT" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0"/>
+            <Button Clicked="Button_Clicked" Text="Input File" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
+        </Grid>
+
+        <!--MAZE-->
+        <Grid BackgroundColor="Black" Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.RowSpan="2" Grid.ColumnSpan="3" RowSpacing="5" ColumnSpacing="5">
+             <Grid.RowDefinitions>
+                <RowDefinition Height=".2*"/>
+                <RowDefinition />
+                <RowDefinition Height=".2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".4*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width=".4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
+
+            </Grid>
+
+            <!--Ouput Text-->
+            <Grid Grid.Row="0" Grid.Column="1" BackgroundColor="Wheat">
+                <Label Text="OUTPUT" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+            </Grid>
+            <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
+
+
+            </Grid>
+
+            <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0"/>
+
+            <!--Maze Map-->
+            <Grid x:Name="mazeGrid" Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
+                <ContentView x:Name="mazeView"/>
+
+            </Grid>
+            <Label BackgroundColor="Wheat" Grid.Row="1" Grid.Column="2"/>
+            <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="0"/>
+
+            <!--Slider-->
+            <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="1">
+                <Slider Maximum="1000" ValueChanged="mazeSlider"/>
+            </Grid>
+            <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2">
+
+            </Grid>
+
+        </Grid>
+
+        <!--BFS/DFS CHOICE-->
+        <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height=".3*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+            <Label Text="ALGORITMA" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Label Text="DFS" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="1" Grid.Column="0"/>
+            <Label Text="BFS" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="2" Grid.Column="0"/>
+            <CheckBox x:Name="dfsCheckBox" Grid.Row="1" Color="Red" Grid.Column="1"></CheckBox>
+            <CheckBox x:Name="bfsCheckBox" Grid.Row="2" Color="Red" Grid.Column="1"></CheckBox>
+
+
+        </Grid>
+
+        <!--INFORMATION-->
+        <Grid  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Button x:Name="visu" Text="VISUALIZE" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White" Clicked="visu_Clicked"/>
+
+        </Grid>
+
+        <!--Route and Nodes-->
+        <Grid RowSpacing="5" BackgroundColor="Wheat" Grid.Row="3" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".1*"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Type-->
+            <Label Grid.Row="0" Text="Route:" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label Grid.Row="1" Text="Nodes:" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+
+            <!--Ouput-->
+            <Label Grid.Row="0" Grid.Column="1" Text="Test" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" Padding="10" />
+            <Label x:Name="nodesCounter" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+        </Grid>
+
+        <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+        </Grid>
+
+        <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--Type-->
+            <Label Grid.Row="0" Text="Steps : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label Grid.Row="1" Text="Execution Time : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+
+            <!--Ouput-->
+            <Label x:Name="stepsInfo" Grid.Row="0" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label x:Name="executionTime" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+
+        </Grid>
+    </Grid>
+
+</ContentPage>
+
