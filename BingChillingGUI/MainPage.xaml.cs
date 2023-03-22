@@ -232,6 +232,8 @@ namespace BingChillingGUI
                 //DisplayMaze(this.maze, maze.Rows, maze.Cols);
 
                 stopwatch.Stop();
+                routeInfo.Text = bfsPath.Last().GetDirections("");
+                stepsInfo.Text = $"{bfsPath.Count() - 1}";
             }
             else if (dfsCheckBox.IsChecked)
             {
@@ -266,7 +268,8 @@ namespace BingChillingGUI
                 
 
                 stopwatch.Stop();
-
+                routeInfo.Text = dfsPath.Last().GetDirections("");
+                stepsInfo.Text = $"{dfsPath.Count() - 1}";
             }
             else
             {
@@ -277,10 +280,13 @@ namespace BingChillingGUI
                 return;
             }
 
+            
             executionTime.Text = $"{stopwatch.ElapsedMilliseconds} ms";
             nodesCounter.Text = $"{steps}";
             SemanticScreenReader.Announce(nodesCounter.Text);
             SemanticScreenReader.Announce(executionTime.Text);
+            SemanticScreenReader.Announce(routeInfo.Text);
+            SemanticScreenReader.Announce(stepsInfo.Text);
 
 
         }
