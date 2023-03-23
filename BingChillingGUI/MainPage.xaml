@@ -127,11 +127,11 @@
             <Label Grid.Row="1" Text="Nodes:" TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
 
             <!--Ouput-->
-            <Label x:Name="routeInfo" Grid.Row="0" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" Padding="10" />
+            <Label x:Name="routeInfo" Grid.Row="0" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" Padding="10" Grid.ColumnSpan="2"/>
             <Label x:Name="nodesCounter" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
         </Grid>
 
-        <Grid BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid x:Name="bottom" BackgroundColor="Wheat" Grid.Row="3" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
         </Grid>
 
