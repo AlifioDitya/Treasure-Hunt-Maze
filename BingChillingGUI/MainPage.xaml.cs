@@ -95,6 +95,7 @@ namespace BingChillingGUI
             catch (Exception ex) //
             {
                 // The user canceled or something went wrong
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -183,11 +184,12 @@ namespace BingChillingGUI
             else if (bfsCheckBox.IsChecked)
             {
                 //await DisplayAlert("BFS", "", "OK");
-                stopwatch.Start();
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
+                stopwatch.Start();
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
-                
+                stopwatch.Stop();
+
                 int index = 0;
                 int count = 0;
                 while(index < bfsPath.Count) {
@@ -232,8 +234,6 @@ namespace BingChillingGUI
                 steps = bfsPath.Count;
                 //DisplayMaze(this.maze, maze.Rows, maze.Cols);
 
-                stopwatch.Stop();
-
                 if (bfsPath.Count() > 0)
                 {
                     routeInfo.Text = bfsPath.Last().GetDirections("");
@@ -248,10 +248,12 @@ namespace BingChillingGUI
             else if (dfsCheckBox.IsChecked)
             {
                 //await DisplayAlert("DFS", "", "OK");
-                stopwatch.Start();
                 // Run DFS algorithm
                 BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
+                stopwatch.Start();
                 List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                stopwatch.Stop();
+
                 Console.WriteLine();
 
                 int index = 0;
@@ -276,8 +278,6 @@ namespace BingChillingGUI
 
                 steps = dfsPath.Count;
                 
-
-                stopwatch.Stop();
                 if (dfsPath.Count() > 0)
                 {
                     routeInfo.Text = dfsPath.Last().GetDirections("");
