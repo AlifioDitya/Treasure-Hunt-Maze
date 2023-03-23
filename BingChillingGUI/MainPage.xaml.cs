@@ -178,7 +178,7 @@ namespace BingChillingGUI
             int[,] matrix = new int[maze.Rows, maze.Cols];
             if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
             {
-                await DisplayAlert("Error", "Please select only 1 checkbox to run the algorithm.", "OK");
+                await DisplayAlert("Error", "Please select only the BFS or DFS checkbox to run the algorithm.", "OK");
                 stopwatch.Start();
                 stopwatch.Stop();
             }
@@ -297,7 +297,7 @@ namespace BingChillingGUI
                 stopwatch.Start();
                 stopwatch.Stop();
                 // No checkbox selected, show error message
-                await DisplayAlert("Error", "Please select a checkbox to run the algorithm.", "OK");
+                await DisplayAlert("Error", "Please select a BFS or DFS checkbox to run the algorithm.", "OK");
                 return;
             }
 
