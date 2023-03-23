@@ -69,7 +69,7 @@ namespace BingChilling.Environment
                     }
                     else
                     {
-                        continue;
+                        throw new InvalidMazeFormatException("Error parsing maze file.");
                     }
                 }
             }
@@ -137,6 +137,17 @@ namespace BingChilling.Environment
         {
             get { return _treasures; }
             set { _treasures = value; }
+        }
+    }
+
+    public class InvalidMazeFormatException : Exception
+    {
+        public InvalidMazeFormatException(string message) : base(message)
+        {
+        }
+
+        public InvalidMazeFormatException(string message, Exception innerException) : base(message, innerException)
+        {
         }
     }
 }

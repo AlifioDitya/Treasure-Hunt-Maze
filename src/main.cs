@@ -11,7 +11,14 @@ namespace BingChilling
             Maze maze = new Maze(0, 0);
 
             // Load maze
-            maze.Load(@"C:\Users\Fio\source\repos\Tubes2_RealBingChilling\src\maze.txt");
+            try
+            {
+                maze.Load(@"C:\Users\Fio\source\repos\Tubes2_RealBingChilling\src\maze.txt");
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return;
+            }
 
             // Search with BFS
             BFS bfs = new BFS(maze);

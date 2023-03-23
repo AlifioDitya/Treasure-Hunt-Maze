@@ -173,6 +173,10 @@ namespace BingChillingGUI
             catch (FileNotFoundException) {
                 await DisplayAlert("Error", "Please select a file.", "OK");
                 return;
+            } catch (Exception)
+            {
+                await DisplayAlert("Error", "Please check the file format", "OK");
+                return;
             }
             
             int[,] matrix = new int[maze.Rows, maze.Cols];
