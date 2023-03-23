@@ -60,4 +60,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\src\BingChillingConsole.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\karla.regular.ttf" />
+	</ItemGroup>
 </Project>

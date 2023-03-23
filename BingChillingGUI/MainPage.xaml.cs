@@ -25,61 +25,45 @@ namespace BingChillingGUI
         private int shade;
         private int shade2;
         private Grid grid;
+        private FileResult result;
+
         private async void Button_Clicked(object sender, EventArgs e)
         {
             PickOptions options = new PickOptions();
             try
             {
-                var result = await FilePicker.Default.PickAsync(options);
+                result = await FilePicker.Default.PickAsync(options);
                 if (result != null)
                 {
                     if (result.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                     {
+                        BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
+                        maze.Load(result.FullPath);
                         fileName.Text = $"\"{result.FileName}\"";
                         this.filePath = result.FullPath;
-                        using var ctrstream = await result.OpenReadAsync();
-                        using var ctrreader = new StreamReader(ctrstream);
 
-
-                        int row = 0, col = 0;
-                        //int[,] matrix = new int[6, 6]; // Fixed dimensions for the example maze
-
-                        string ctrline;
-                        while ((ctrline = ctrreader.ReadLine()) != null)
-                        {
-                            col = 0;
-                            foreach (char c in ctrline)
-                            {
-                                col++;
+                        int[,] matrix = new int[maze.Rows, maze.Cols];
+                        int startcount = 0;
+                        for(int i = 0; i < matrix.GetLength(0); i++) {
+                            for(int j = 0; j < matrix.GetLength(1); j++) {
+                                if (maze[i, j] == 1)
+                                {
+                                    matrix[i, j] = -1;
+                                }
+                                else if (maze[i, j] == 0 && i == maze.StartRow && i == maze.StartRow && startcount == 0)
+                                {
+                                    matrix[i, j] = 0;
+                                    startcount++;
+                                }
+                                else if (maze[i, j] == 2)
+                                {
+                                    matrix[i, j] = 2;
+                                }
+                                else if (maze[i,j] == 0)
+                                {
+                                    matrix[i, j] = 1;
+                                }
                             }
-                            row++;
-                        }
-
-                        int[,] matrix = new int[row, col];
-
-
-                        row = 0;
-
-                        using var stream = await result.OpenReadAsync();
-                        using var reader = new StreamReader(stream);
-                        string line;
-
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            col = 0;
-                            foreach (char c in line)
-                            {
-                                if (c == 'X')
-                                    matrix[row, col] = -1; // Wall
-                                else if (c == 'R')
-                                    matrix[row, col] = 1; // Road
-                                else if (c == 'T')
-                                    matrix[row, col] = 2; // Treasure
-                                else if (c == 'K')
-                                    matrix[row, col] = 0;
-                                col++;
-                            }
-                            row++;
                         }
 
                         for (int i = 0; i < matrix.GetLength(0); i++)
@@ -91,7 +75,7 @@ namespace BingChillingGUI
                             Console.WriteLine();
                         }
                         this.maze = matrix;
-                        await DisplayMaze(matrix, row, col);
+                        await DisplayMaze(matrix, maze.Rows, maze.Cols);
                     }
                     else
                     {
@@ -487,8 +471,8 @@ namespace BingChillingGUI
             }
 
 
-            executionTime.Text = $"{stopwatch.ElapsedMilliseconds} ms";
-            nodesCounter.Text = $"{steps}";
+            executionTime.Text = $"Execution Time : {stopwatch.ElapsedMilliseconds} ms";
+            nodesCounter.Text = $"Nodes : {steps}";
             SemanticScreenReader.Announce(nodesCounter.Text);
             SemanticScreenReader.Announce(executionTime.Text);
             SemanticScreenReader.Announce(routeInfo.Text);
