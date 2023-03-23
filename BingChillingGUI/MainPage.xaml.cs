@@ -32,6 +32,7 @@ namespace BingChillingGUI
                 {
                     if (result.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                     {
+                        fileName.Text = $"\"{result.FileName}\"";
                         this.filePath = result.FullPath;
                         using var ctrstream = await result.OpenReadAsync();
                         using var ctrreader = new StreamReader(ctrstream);
@@ -188,6 +189,7 @@ namespace BingChillingGUI
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
                 stopwatch.Start();
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                
                 int index = 0;
                 int count = 0;
                 while(index < bfsPath.Count) {
@@ -231,18 +233,18 @@ namespace BingChillingGUI
                 }
                 steps = bfsPath.Count;
                 //DisplayMaze(this.maze, maze.Rows, maze.Cols);
-
                 stopwatch.Stop();
+
 
                 if (bfsPath.Count() > 0)
                 {
-                    routeInfo.Text = bfsPath.Last().GetDirections("");
-                    stepsInfo.Text = $"{bfsPath.Count() - 1}";
+                    routeInfo.Text = $"Route : {bfsPath.Last().GetDirections("")}";
+                    stepsInfo.Text = $"Steps : {bfsPath.Count() - 1}";
                 }
                 else
                 {
-                    routeInfo.Text = "";
-                    stepsInfo.Text = "0";
+                    routeInfo.Text = "Route : -";
+                    stepsInfo.Text = "Steps : 0";
                 }
             }
             else if (dfsCheckBox.IsChecked)
@@ -252,6 +254,7 @@ namespace BingChillingGUI
                 BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
                 stopwatch.Start();
                 List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                
                 Console.WriteLine();
 
                 int index = 0;
@@ -275,18 +278,18 @@ namespace BingChillingGUI
                 await DisplayMaze(this.maze, maze.Rows, maze.Cols);
 
                 steps = dfsPath.Count;
-                
 
                 stopwatch.Stop();
+
                 if (dfsPath.Count() > 0)
                 {
-                    routeInfo.Text = dfsPath.Last().GetDirections("");
-                    stepsInfo.Text = $"{dfsPath.Count() - 1}";
+                    routeInfo.Text = $"Route : {dfsPath.Last().GetDirections("")}";
+                    stepsInfo.Text = $"Steps : {dfsPath.Count() - 1}";
                 }
                 else
                 {
-                    routeInfo.Text = "";
-                    stepsInfo.Text = "0";
+                    routeInfo.Text = "Route : -";
+                    stepsInfo.Text = "Steps : 0";
                 }
             }
             else
@@ -300,7 +303,7 @@ namespace BingChillingGUI
 
             
             executionTime.Text = $"{stopwatch.ElapsedMilliseconds} ms";
-            nodesCounter.Text = $"{steps}";
+            nodesCounter.Text = $"Nodes : {steps}";
             SemanticScreenReader.Announce(nodesCounter.Text);
             SemanticScreenReader.Announce(executionTime.Text);
             SemanticScreenReader.Announce(routeInfo.Text);
@@ -318,6 +321,10 @@ namespace BingChillingGUI
         private void ResetButton(object sender, EventArgs e)
         {
             mazeView.Content = null;
+            executionTime.Text = $"";
+            nodesCounter.Text = $"Nodes : ";
+            routeInfo.Text = "Route : ";
+            stepsInfo.Text = "Steps : ";
         }
     }
 }
