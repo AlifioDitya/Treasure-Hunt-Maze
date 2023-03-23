@@ -40,16 +40,26 @@ namespace BingChilling.Environment
             _cols = lines[0].Length;
             _grid = new int[_rows, _cols];
 
+            int startCount = 0;
+
             for (int i = 0; i < _rows; i++)
             {
                 for (int j = 0; j < _cols; j++)
                 {
                     if (lines[i][j] == 'K')
                     {
-                        // Set start point
-                        _startRow = i;
-                        _startCol = j;
-                        _grid[i, j] = 0;
+                        if (startCount == 0)
+                        {
+                            // Set start point
+                            _startRow = i;
+                            _startCol = j;
+                            _grid[i, j] = 0;
+                            startCount++;
+                        }
+                        else
+                        {
+                            throw new InvalidMazeFormatException("Error parsing maze file.");
+                        }
                     }
                     else if (lines[i][j] == 'T')
                     {
