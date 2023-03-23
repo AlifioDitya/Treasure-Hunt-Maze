@@ -15,7 +15,6 @@ namespace BingChillingGUI
         public MainPage()
         {
             InitializeComponent();
-            //startlabel.Clicked += mazeSlider;
 
         }
 
@@ -522,7 +521,7 @@ namespace BingChillingGUI
                     if (label != null)
                     {
                         number--;
-                        label.BackgroundColor = Color.FromRgb(255, 255 - number * 50, 0);
+                        label.BackgroundColor = Color.FromRgb(255, 255 - number * 20, 0);
                     }
                 }
                 else
