@@ -165,7 +165,7 @@ namespace BingChillingGUI
             Stopwatch stopwatch = new Stopwatch();
 
             int steps = 0;
-            BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
+            Maze maze = new Maze(0, 0);
             try {
                 maze.Load(this.filePath);
             }

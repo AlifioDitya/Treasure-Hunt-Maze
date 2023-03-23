@@ -34,6 +34,8 @@ namespace BingChilling.Environment
 
             // Read maze data from file
             string[] lines = File.ReadAllLines(filePath);
+            lines = lines.Select(line => line.Replace(" ", "")).ToArray();
+
             _rows = lines.Length;
             _cols = lines[0].Length;
             _grid = new int[_rows, _cols];
@@ -60,10 +62,14 @@ namespace BingChilling.Environment
                         // Set wall
                         _grid[i, j] = 1;
                     }
-                    else
+                    else if (lines[i][j] == 'R')
                     {
                         // Set empty cell
                         _grid[i, j] = 0;
+                    }
+                    else
+                    {
+                        continue;
                     }
                 }
             }
