@@ -17,12 +17,12 @@
             <ColumnDefinition />
 
         </Grid.ColumnDefinitions>
-        <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="4">
-            <Label Text="TREASURE HUNT SOLVER" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Grid BackgroundColor="#2E3134" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="4">
+            <Label Text="TREASURE HUNT SOLVER" FontSize="40" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="Center"/>
         </Grid>
 
         <!--INPUT FILE-->
-        <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid BackgroundColor="#2E3134" Grid.Row="1" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -32,9 +32,9 @@
 
 
             </Grid.ColumnDefinitions>
-            <Label Text="INPUT" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0"/>
-            <Label x:Name="fileName" Text="No file selected." FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
-            <Button Clicked="Button_Clicked" Text="Input File" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="2"/>
+            <Label Text="INPUT" FontSize="40" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0"/>
+            <Label x:Name="fileName" Text="No file selected." FontSize="30" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
+            <Button Clicked="Button_Clicked" Text="Input File" FontSize="30" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" Background="#5F6368" HorizontalOptions="Center" Grid.Row="2"/>
         </Grid>
 
         <!--MAZE-->
@@ -51,34 +51,13 @@
             </Grid.ColumnDefinitions>
 
             <!--Top Left-->
-            <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="0">
-                
-            </Grid>
-
-            <!--Top-->
-            <Grid Grid.Row="0" Grid.Column="1" BackgroundColor="Wheat">
-                <!--Ouput Text-->
-                <Label Text="OUTPUT" FontSize="40" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Grid BackgroundColor="#2E3134" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <!--Maze Map-->
+                <ContentView x:Name="mazeView"/>
             </Grid>
 
             <!--Top Right-->
-            <Grid BackgroundColor="Wheat" Grid.Row="0" Grid.Column="2" >
-            </Grid>
-
-            <!--Middle Left-->
-            <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="0">
-                
-            </Grid>
-
-            <!--Middle-->
-            <Grid x:Name="mazeGrid" Grid.Row="1" Grid.Column="1"  BackgroundColor="White">
-                <!--Maze Map-->
-                <ContentView x:Name="mazeView"/>
-
-            </Grid>
-
-            <!--Middle Right-->
-            <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="2">
+            <Grid BackgroundColor="#2E3134" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".3*"/>
                     <RowDefinition Height=".3*"/>
@@ -89,35 +68,32 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 
-                <Label x:Name="stepsInfo" Grid.Row="0" Text="Steps : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
-                <Label x:Name="executionTime" Grid.Row="2" Text="Execution Time : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
-                <Label x:Name="nodesCounter" Grid.Row="1" Text="Nodes : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
-                <!--<Label  Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>-->
+                <Label x:Name="stepsInfo" Grid.Row="0" Text="Steps : " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+                <Label x:Name="executionTime" Grid.Row="2" Text="Execution Time : " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+                <Label x:Name="nodesCounter" Grid.Row="1" Text="Nodes : " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+                <!--<Label  Grid.Row="1" Grid.Column="1" Text=" " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" HorizontalOptions="Start" Padding="10"/>-->
                 <!--Ouput-->
-                <!--<Label x:Name="stepsInfo" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>-->
-                <Label  Grid.Row="3" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
-
+                <!--<Label x:Name="stepsInfo" Grid.Row="1" Grid.Column="1" Text=" " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" HorizontalOptions="Start" Padding="10"/>-->
+                <Label  Grid.Row="3" Grid.Column="1" Text=" " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" HorizontalOptions="Start" Padding="10"/>
             </Grid>
 
             <!--Bottom Left-->
-            <Label BackgroundColor="Wheat" Grid.Row="2" Grid.Column="0"/>
-
-            <!--Bottom-->
-            <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="1">
+            <Grid BackgroundColor="#2E3134" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                 <!--Slider-->
                 <Slider Maximum="1000" ValueChanged="mazeSlider"/>
+
             </Grid>
 
             <!--Bottom Right-->
-            <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="2">
+            <Grid BackgroundColor="#2E3134" Grid.Row="2" Grid.Column="2">
                 <!--Reset Maze Map Button-->
-                <Button Text="RESET" FontFamily="Times New Roman Bold" FontSize="20" TextColor="Black" Background="white" WidthRequest="100" HeightRequest="10" Clicked="ResetButton" BackgroundColor="Wheat"/>
+                <Button Text="RESET" FontFamily="karla" FontSize="20" TextColor="AntiqueWhite" Background="#5F6368" WidthRequest="100" HeightRequest="10" Clicked="ResetButton" BackgroundColor="#2E3134"/>
             </Grid>
 
         </Grid>
 
         <!--BFS/DFS CHOICE-->
-        <Grid BackgroundColor="Wheat" Grid.Row="2" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid BackgroundColor="#2E3134" Grid.Row="2" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -129,25 +105,25 @@
                 <ColumnDefinition/>
 
             </Grid.ColumnDefinitions>
-            <Label Text="ALGORITMA" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.ColumnSpan="2"/>
-            <Label Text="DFS" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="1" Grid.Column="0"/>
-            <Label Text="BFS" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="2" Grid.Column="0"/>
-            <Label Text="TSP" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="3" Grid.Column="0"/>
-            <CheckBox x:Name="dfsCheckBox" Grid.Row="1" Color="Red" Grid.Column="1"></CheckBox>
-            <CheckBox x:Name="bfsCheckBox" Grid.Row="2" Color="Red" Grid.Column="1"></CheckBox>
-            <CheckBox x:Name="tspCheckBox" Grid.Row="3" Color="Red" Grid.Column="1"></CheckBox>
+            <Label Text="ALGORITMA" FontSize="30" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Label Text="DFS" FontSize="30" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="1" Grid.Column="0"/>
+            <Label Text="BFS" FontSize="30" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="2" Grid.Column="0"/>
+            <Label Text="TSP" FontSize="30" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="End" Grid.Row="3" Grid.Column="0"/>
+            <CheckBox x:Name="dfsCheckBox" Grid.Row="1" Color="AntiqueWhite" Grid.Column="1"></CheckBox>
+            <CheckBox x:Name="bfsCheckBox" Grid.Row="2" Color="AntiqueWhite" Grid.Column="1"></CheckBox>
+            <CheckBox x:Name="tspCheckBox" Grid.Row="3" Color="AntiqueWhite" Grid.Column="1"></CheckBox>
 
 
         </Grid>
 
         <!--INFORMATION-->
-        <Grid  BackgroundColor="Wheat" Grid.Row="3" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Button x:Name="visu" Text="VISUALIZE" FontSize="30" FontFamily="Times New Roman Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White" Clicked="visu_Clicked"/>
+        <Grid  BackgroundColor="#2E3134" Grid.Row="3" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Button x:Name="visu" Text="VISUALIZE" FontSize="30" FontFamily="karla" TextColor="AntiqueWhite" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#5F6368" Clicked="visu_Clicked"/>
 
         </Grid>
 
         <!--Route and Nodes-->
-        <Grid RowSpacing="5" BackgroundColor="Wheat" Grid.Row="3" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="3">
+        <Grid RowSpacing="5" BackgroundColor="#2E3134" Grid.Row="3" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition />
             </Grid.RowDefinitions>
@@ -156,10 +132,10 @@
             </Grid.ColumnDefinitions>
 
             <!--Type-->
-            <Label x:Name="routeInfo"  Grid.Row="0" Text="Route : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+            <Label x:Name="routeInfo"  Grid.Row="0" Text="Route : " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" HorizontalOptions="Start" Padding="10"/>
 
             <!--Ouput-->
-            <!--<Label Grid.Row="0" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" Padding="10" Grid.ColumnSpan="2"/>-->
+            <!--<Label Grid.Row="0" Grid.Column="1" Text=" " TextColor="AntiqueWhite" FontFamily="karla" FontSize="25" Padding="10" Grid.ColumnSpan="2"/>-->
         </Grid>
     </Grid>
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using System.Diagnostics;
 using System.Threading;
+using BingChilling.Algorithms;
 //using Microsoft.Maui.Controls.Compatibility;
 //using static Android.InputMethodServices.Keyboard;
 
@@ -21,64 +22,46 @@ namespace BingChillingGUI
         private string filePath;
         private int[,] maze;
         private int sliderValue;
-        private int shade;
-        private int shade2;
         private Grid grid;
+        private FileResult result;
+
         private async void Button_Clicked(object sender, EventArgs e)
         {
             PickOptions options = new PickOptions();
             try
             {
-                var result = await FilePicker.Default.PickAsync(options);
+                result = await FilePicker.Default.PickAsync(options);
                 if (result != null)
                 {
                     if (result.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                     {
+                        BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
+                        maze.Load(result.FullPath);
                         fileName.Text = $"\"{result.FileName}\"";
                         this.filePath = result.FullPath;
-                        using var ctrstream = await result.OpenReadAsync();
-                        using var ctrreader = new StreamReader(ctrstream);
 
-
-                        int row = 0, col = 0;
-                        //int[,] matrix = new int[6, 6]; // Fixed dimensions for the example maze
-
-                        string ctrline;
-                        while ((ctrline = ctrreader.ReadLine()) != null)
-                        {
-                            col = 0;
-                            foreach (char c in ctrline)
-                            {
-                                col++;
+                        int[,] matrix = new int[maze.Rows, maze.Cols];
+                        int startcount = 0;
+                        for(int i = 0; i < matrix.GetLength(0); i++) {
+                            for(int j = 0; j < matrix.GetLength(1); j++) {
+                                if (maze[i, j] == 1)
+                                {
+                                    matrix[i, j] = -1;
+                                }
+                                else if (maze[i, j] == 0 && i == maze.StartRow && i == maze.StartRow && startcount == 0)
+                                {
+                                    matrix[i, j] = 0;
+                                    startcount++;
+                                }
+                                else if (maze[i, j] == 2)
+                                {
+                                    matrix[i, j] = 2;
+                                }
+                                else if (maze[i,j] == 0)
+                                {
+                                    matrix[i, j] = 1;
+                                }
                             }
-                            row++;
-                        }
-
-                        int[,] matrix = new int[row, col];
-
-
-                        row = 0;
-
-                        using var stream = await result.OpenReadAsync();
-                        using var reader = new StreamReader(stream);
-                        string line;
-
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            col = 0;
-                            foreach (char c in line)
-                            {
-                                if (c == 'X')
-                                    matrix[row, col] = -1; // Wall
-                                else if (c == 'R')
-                                    matrix[row, col] = 1; // Road
-                                else if (c == 'T')
-                                    matrix[row, col] = 2; // Treasure
-                                else if (c == 'K')
-                                    matrix[row, col] = 0;
-                                col++;
-                            }
-                            row++;
                         }
 
                         for (int i = 0; i < matrix.GetLength(0); i++)
@@ -90,7 +73,7 @@ namespace BingChillingGUI
                             Console.WriteLine();
                         }
                         this.maze = matrix;
-                        await DisplayMaze(matrix, row, col);
+                        await DisplayMaze(matrix, maze.Rows, maze.Cols);
                     }
                     else
                     {
@@ -144,11 +127,10 @@ namespace BingChillingGUI
                     // Create a new label for this element
                     var label = new Label
                     {
-                        Text = matrix[i, j] == 2 || matrix[i, j] == 5 || matrix[i, j] == 8 ? "Treasure" : matrix[i, j] == 0 || matrix[i, j] == 3 || matrix[i, j] == 6 ? "Start" : "",
+                        Text = matrix[i, j] == 2 || matrix[i, j] == 5 ? "Treasure" : matrix[i, j] == 0 || matrix[i, j] == 3 ? "Start" : "",
                         TextColor = matrix[i, j] == 0 || matrix[i, j] == 2 || matrix[i, j] == 3 || matrix[i, j] == 5 ? Color.FromRgb(0, 0, 0) : Color.FromRgb(255, 255, 255),
                         BackgroundColor = matrix[i, j] == -1 ? Color.FromRgb(0, 0, 0)
-                                         : matrix[i, j] == 3 || matrix[i, j] == 4 || matrix[i, j] == 5 ? Color.FromRgb(this.shade, this.shade2, 0)
-                                         : matrix[i, j] == 6 || matrix[i, j] == 7 || matrix[i, j] == 8 ? Color.FromRgb(0, 0, 255)
+                                         : matrix[i, j] == 3 || matrix[i, j] == 4 || matrix[i, j] == 5 ? Color.FromRgb(0, 255, 0)
                                          : Color.FromRgb(255, 255, 255),
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center
@@ -183,17 +165,10 @@ namespace BingChillingGUI
             {
                 await DisplayAlert("Error", "Please select a file.", "OK");
                 return;
-            }
-
-            int[,] matrix = new int[maze.Rows, maze.Cols];
-            int prevVal = 0;
-            //int[,] matrix2 = new int[maze.Rows, maze.Cols];
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            } catch (Exception ex)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    matrix[i, j] = -1;
-                }
+                await DisplayAlert("Error", ex.Message.ToString(), "OK");
+                return;
             }
 
             if (bfsCheckBox.IsChecked && dfsCheckBox.IsChecked)
@@ -205,113 +180,25 @@ namespace BingChillingGUI
             else if (bfsCheckBox.IsChecked)
             {
                 //await DisplayAlert("BFS", "", "OK");
-                stopwatch.Start();
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
-                List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                stopwatch.Start();
+
+                List<Node> bfsPath; //= bfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                if (tspCheckBox.IsChecked)
+                {
+                    bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
+                    //cleanDFSPath = dfsPath.Last().ListPath();
+                    stopwatch.Stop();
+                }
+                else
+                {
+                    bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol, false);
+                    //cleanDFSPath = dfsPath.Last().ListPath();
+                }
                 stopwatch.Stop();
-
-                int index = 0;
-                int count = 0;
-                this.shade2 = 255;
-                this.shade = 255;
-                while (index <= bfsPath.Count)
-                {
-                    if (count > 0)
-                    {
-                        if (this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] == 6)
-                        {
-                            this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] = 3;
-                            //this.shade += 50;
-                        }
-                        else if (this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] == 7)
-                        {
-                            this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] = 4;
-                            //this.shade += 50;
-                        }
-                        else if (this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] == 8)
-                        {
-                            this.maze[bfsPath[index - 1].X, bfsPath[index - 1].Y] = 5;
-                            //this.shade += 50;
-                        }
-
-                        if (prevVal > 0)
-                        {
-                            prevVal++;
-                            matrix[bfsPath[index - 1].X, bfsPath[index - 1].Y] = prevVal;
-
-                        }
-                        else
-                        {
-                            //prevVal = matrix[bfsPath[index].X, bfsPath[index].Y];
-                            matrix[bfsPath[index - 1].X, bfsPath[index - 1].Y]++;
-
-                        }
-                        await ChangeTileColor(matrix[bfsPath[index - 1].X, bfsPath[index - 1].Y], bfsPath[index - 1].X, bfsPath[index - 1].Y);
-                        if (index == bfsPath.Count)
-                        {
-                            index++;
-                        }
-
-                        //await DisplayMaze(this.maze, maze.Rows, maze.Cols);
-                    }
-                    //searching this index
-                    if (index < bfsPath.Count)
-                    {
-                        if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 0 || this.maze[bfsPath[index].X, bfsPath[index].Y] == 3)
-                        {
-
-                            this.maze[bfsPath[index].X, bfsPath[index].Y] = 6;
-
-                        }
-                        else if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 1 || this.maze[bfsPath[index].X, bfsPath[index].Y] == 4)
-                        {
-
-                            this.maze[bfsPath[index].X, bfsPath[index].Y] = 7;
-                        }
-                        else if (this.maze[bfsPath[index].X, bfsPath[index].Y] == 2 || this.maze[bfsPath[index].X, bfsPath[index].Y] == 5)
-                        {
-
-                            this.maze[bfsPath[index].X, bfsPath[index].Y] = 8;
-                        }
-                        if (matrix[bfsPath[index].X, bfsPath[index].Y] == -1)
-                        {
-                            prevVal = 0;
-                            matrix[bfsPath[index].X, bfsPath[index].Y]++;
-                        }
-                        else
-                        {
-                            prevVal = matrix[bfsPath[index].X, bfsPath[index].Y];
-                            matrix[bfsPath[index].X, bfsPath[index].Y] = 0;
-
-                        }
-                        await ChangeTileColor(0, bfsPath[index].X, bfsPath[index].Y);
-                        index++;
-                        //await DisplayMaze(this.maze, maze.Rows, maze.Cols);
-                        if (count == 0)
-                        {
-                            count++;
-                        }
-                    }
-                }
-                this.shade = 0;
-                Console.WriteLine(this.shade);
-
-                await DisplayMaze(this.maze, maze.Rows, maze.Cols);
-
-                for (int i = 0; i < matrix.GetLength(0); i++)
-                {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
-                    {
-                        Console.Write(matrix[i, j] + " ");
-                    }
-                    Console.WriteLine();
-
-                }
-
-
+                visualization(bfsPath, bfsPath);
                 steps = bfsPath.Count;
-
                 if (bfsPath.Count() > 0)
                 {
                     routeInfo.Text = $"Route : {bfsPath.Last().GetDirections("")}";
@@ -328,139 +215,20 @@ namespace BingChillingGUI
                 //await DisplayAlert("DFS", "", "OK");
                 stopwatch.Start();
                 // Run DFS algorithm
+                List<Node> dfsPath;
+                List<Node> cleanDFSPath;
                 BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
-                List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
-                List<Node> cleanDFSPath = dfsPath.Last().ListPath();
-                stopwatch.Stop();
-                Console.WriteLine();
-
-                int index = 0;
-                int count = 0;
-                this.shade2 = 255;
-                Console.WriteLine(dfsPath.Count);
-                while (index <= dfsPath.Count)
-                {
-                    if (count > 0)
-                    {
-                        /*if (this.maze[dfsPath[index - 1].X, dfsPath[index - 1].Y] == 6)
-                        {
-                            this.maze[dfsPath[index - 1].X, dfsPath[index - 1].Y] = 3;
-                            //this.shade += 50;
-                        }
-                        else if (this.maze[dfsPath[index - 1].X, dfsPath[index - 1].Y] == 7)
-                        {
-                            this.maze[dfsPath[index - 1].X, dfsPath[index - 1].Y] = 4;
-                            //this.shade += 50;
-                        }
-                        else if (this.maze[dfsPath[index - 1].X, dfsPath[index - 1].Y] == 8)
-                        {
-                            this.maze[dfsPath[index - 1].X, dfsPath[index - 1].Y] = 5;
-                            //this.shade += 50;
-                        }*/
-
-                        if (prevVal > 0)
-                        {
-                            prevVal++;
-                            matrix[dfsPath[index - 1].X, dfsPath[index - 1].Y] = prevVal;
-
-                        }
-                        else
-                        {
-                            //prevVal = matrix[bfsPath[index].X, bfsPath[index].Y];
-                            matrix[dfsPath[index - 1].X, dfsPath[index - 1].Y]++;
-
-                        }
-                        await ChangeTileColor(matrix[dfsPath[index - 1].X, dfsPath[index - 1].Y], dfsPath[index - 1].X, dfsPath[index - 1].Y);
-                        Console.WriteLine("Index: ");
-                        Console.WriteLine(index);
-                        if (index == dfsPath.Count)
-                        {
-                           
-                            index++;
-                        }
-
-                        //await DisplayMaze(this.maze, maze.Rows, maze.Cols);
-                    }
-                    //searching this index
-                    if (index < dfsPath.Count)
-                    {
-                        /*if (this.maze[dfsPath[index].X, dfsPath[index].Y] == 0 || this.maze[dfsPath[index].X, dfsPath[index].Y] == 3)
-                        {
-
-                            this.maze[dfsPath[index].X, dfsPath[index].Y] = 6;
-
-                        }
-                        else if (this.maze[dfsPath[index].X, dfsPath[index].Y] == 1 || this.maze[dfsPath[index].X, dfsPath[index].Y] == 4)
-                        {
-
-                            this.maze[dfsPath[index].X, dfsPath[index].Y] = 7;
-                        }
-                        else if (this.maze[dfsPath[index].X, dfsPath[index].Y] == 2 || this.maze[dfsPath[index].X, dfsPath[index].Y] == 5)
-                        {
-
-                            this.maze[dfsPath[index].X, dfsPath[index].Y] = 8;
-                        }*/
-                        if (matrix[dfsPath[index].X, dfsPath[index].Y] == -1)
-                        {
-                            prevVal = 0;
-                            matrix[dfsPath[index].X, dfsPath[index].Y]++;
-                        }
-                        else
-                        {
-                            prevVal = matrix[dfsPath[index].X, dfsPath[index].Y];
-                            matrix[dfsPath[index].X, dfsPath[index].Y] = 0;
-
-                        }
-                        await ChangeTileColor(0, dfsPath[index].X, dfsPath[index].Y);
-                        index++;
-                        //await DisplayMaze(this.maze, maze.Rows, maze.Cols);
-                        if (count == 0)
-                        {
-                            count++;
-                        }
-                    }
+                if (tspCheckBox.IsChecked) {
+                    dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
+                    cleanDFSPath = dfsPath.Last().ListPath();
+                    stopwatch.Stop();
                 }
-                this.shade = 0;
-                Console.WriteLine(this.shade);
-                //await DisplayMaze(this.maze, maze.Rows, maze.Cols);
-                //int index = 0;
-                index = 0;
-                Console.WriteLine("Clean Path Count: ");
-                Console.WriteLine(cleanDFSPath.Count);
-                while (index < cleanDFSPath.Count)
-                {
-                    if (this.maze[cleanDFSPath[index].X, cleanDFSPath[index].Y] == 0)
-                    {
-                        this.maze[cleanDFSPath[index].X, cleanDFSPath[index].Y] = 3;
-                    }
-                    else if (this.maze[cleanDFSPath[index].X, cleanDFSPath[index].Y] == 1)
-                    {
-                        this.maze[cleanDFSPath[index].X, cleanDFSPath[index].Y] = 4;
-                    }
-                    else if (this.maze[cleanDFSPath[index].X, cleanDFSPath[index].Y] == 2)
-                    {
-                        this.maze[cleanDFSPath[index].X, cleanDFSPath[index].Y] = 5;
-                    }
-                    index++;
-                    //Console.WriteLine("CleanPath: ");
-                    //Console.WriteLine(cleanDFSPath[index].X + cleanDFSPath[index].Y);
+                else {
+                    dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol, false);
+                    cleanDFSPath = dfsPath.Last().ListPath();
                 }
-                //Console.WriteLine(cleanDFSPath)
-                await DisplayMaze(this.maze, maze.Rows, maze.Cols);
-                for (int i = 0; i < matrix.GetLength(0); i++)
-                {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
-                    {
-                        Console.Write(this.maze[i, j] + " ");
-                    }
-                    Console.WriteLine();
-
-                }
-
-                steps = dfsPath.Count;
-
-
-                
+                visualization(dfsPath, cleanDFSPath);        
+                steps = dfsPath.Count;               
                 if (dfsPath.Count() > 0)
                 {
                     routeInfo.Text = $"Route : {dfsPath.Last().GetDirections("")}";
@@ -482,8 +250,8 @@ namespace BingChillingGUI
             }
 
 
-            executionTime.Text = $"{stopwatch.ElapsedMilliseconds} ms";
-            nodesCounter.Text = $"{steps}";
+            executionTime.Text = $"Execution Time : {stopwatch.ElapsedMilliseconds} ms";
+            nodesCounter.Text = $"Nodes : {steps}";
             SemanticScreenReader.Announce(nodesCounter.Text);
             SemanticScreenReader.Announce(executionTime.Text);
             SemanticScreenReader.Announce(routeInfo.Text);
@@ -495,7 +263,7 @@ namespace BingChillingGUI
         void mazeSlider(System.Object sender, Microsoft.Maui.Controls.ValueChangedEventArgs e)
         {
             int value = (int)e.NewValue;
-            this.sliderValue = value;
+            this.sliderValue = 1000 - value;
 
         }
         private void ResetButton(object sender, EventArgs e)
@@ -537,6 +305,98 @@ namespace BingChillingGUI
             mazeView.Content = grid;
 
             await Task.Delay(this.sliderValue);
+        }
+
+        private async void visualization(List<Node> list, List<Node> cleanedList) {
+            int[,] matrix = new int[this.maze.GetLength(0), this.maze.GetLength(1)];
+            int prevVal = 0;
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    matrix[i, j] = -1;
+                }
+            }
+
+            int index = 0;
+            int count = 0;
+            while (index <= list.Count)
+            {
+                if (count > 0)
+                {
+
+                    if (prevVal > 0)
+                    {
+                        prevVal++;
+                        matrix[list[index - 1].X, list[index - 1].Y] = prevVal;
+
+                    }
+                    else
+                    {
+                        matrix[list[index - 1].X, list[index - 1].Y]++;
+
+                    }
+                    await ChangeTileColor(matrix[list[index - 1].X, list[index - 1].Y], list[index - 1].X, list[index - 1].Y);
+                    if (index == list.Count)
+                    {
+
+                        index++;
+                    } 
+                }
+                //searching this index
+                if (index < list.Count)
+                {
+
+                    if (matrix[list[index].X, list[index].Y] == -1)
+                    {
+                        prevVal = 0;
+                        matrix[list[index].X, list[index].Y]++;
+                    }
+                    else
+                    {
+                        prevVal = matrix[list[index].X, list[index].Y];
+                        matrix[list[index].X, list[index].Y] = 0;
+
+                    }
+                    await ChangeTileColor(0, list[index].X, list[index].Y);
+                    index++;;
+                    if (count == 0)
+                    {
+                        count++;
+                    }
+                }
+            }
+            index = 0;
+            while (index < cleanedList.Count)
+            {
+                if (this.maze[cleanedList[index].X, cleanedList[index].Y] == 0)
+                {
+                    this.maze[cleanedList[index].X, cleanedList[index].Y] = 3;
+                }
+                else if (this.maze[cleanedList[index].X, cleanedList[index].Y] == 1)
+                {
+                    this.maze[cleanedList[index].X, cleanedList[index].Y] = 4;
+                }
+                else if (this.maze[cleanedList[index].X, cleanedList[index].Y] == 2)
+                {
+                    this.maze[cleanedList[index].X, cleanedList[index].Y] = 5;
+                }
+                index++;
+            }
+
+            for (int i = 0; i < this.maze.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.maze.GetLength(1); j++)
+                {
+                    Console.Write(this.maze[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine(this.maze.GetLength(0));
+            Console.WriteLine(this.maze.GetLength(1));
+
+            await DisplayMaze(this.maze, this.maze.GetLength(0), this.maze.GetLength(1));
+
         }
     }
 }
