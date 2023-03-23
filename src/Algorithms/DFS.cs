@@ -19,6 +19,8 @@ namespace BingChilling.Algorithms
             {
                 Node currentNode = stack.Pop();
 
+                fullPath.Add(currentNode);
+
                 // If the current node is a treasure
                 if (maze[currentNode.X, currentNode.Y] == 2 && !treasureNodes.Any(node => node.X == currentNode.X && node.Y == currentNode.Y))
                 {
@@ -34,10 +36,6 @@ namespace BingChilling.Algorithms
                         if (tsp)
                         {
                             fullPath = fullPath.Concat(SearchPathBack(currentNode)).ToList();
-                        }
-                        else
-                        {
-                            fullPath = fullPath.Concat(currentNode.ListPath()).ToList();
                         }
 
                         Console.WriteLine("Path taken: ");
@@ -57,13 +55,22 @@ namespace BingChilling.Algorithms
                 // Generate all possible next moves
                 List<Node> nextMoves = currentNode.GenerateNextMoves(maze);
 
+                int neighbours = 0;
+
                 // Add each next move to the stack if it hasn't been visited before
                 foreach (Node nextMove in nextMoves)
                 {
                     if (visited[nextMove.X, nextMove.Y] != 1)
                     {
                         stack.Push(nextMove);
+                        neighbours++;
                     }
+                }
+
+                // Backtracking case
+                if (neighbours == 0 && currentNode.Parent != null)
+                {
+                    stack.Push(currentNode.Parent);
                 }
             }
 
@@ -80,10 +87,6 @@ namespace BingChilling.Algorithms
                 {
                     fullPath = fullPath.Concat(SearchPathBack(treasureNodes.Last())).ToList();
                 }
-                else
-                {
-                    fullPath = fullPath.Concat(treasureNodes.Last().ListPath()).ToList();
-                }
 
                 Console.WriteLine("Path taken: ");
                 Console.WriteLine(fullPath.Last().GetDirections(""));
@@ -95,21 +98,33 @@ namespace BingChilling.Algorithms
         public override List<Node> SearchPathBack(Node startNode)
         {
             Stack<Node> stack = new Stack<Node>();
-            visited = new int[maze.Rows, maze.Cols];
-            Node currentNode = startNode;
+            int[,] visited = new int[maze.Rows, maze.Cols];
+            List<Node> fullPath = new List<Node>();
+            Node currentNode;
             stack.Push(startNode);
 
             Console.WriteLine();
             Console.WriteLine("DFS traces way back...");
             Console.WriteLine();
 
+            bool first = true;
+
             while (stack.Count > 0)
             {
                 currentNode = stack.Pop();
 
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    fullPath.Add(currentNode);
+                }
+
                 if (currentNode.X == maze.StartRow && currentNode.Y == maze.StartCol)
                 {
-                    return currentNode.ListPath();
+                    return fullPath;
                 }
                 else
                 {
@@ -119,18 +134,27 @@ namespace BingChilling.Algorithms
                     // Generate all possible next moves
                     List<Node> nextMoves = currentNode.GenerateNextMoves(maze);
 
+                    int neighbours = 0;
+
                     // Add each next move to the queue if it hasn't been visited before
                     foreach (Node nextMove in nextMoves)
                     {
                         if (visited[nextMove.X, nextMove.Y] != 1)
                         {
                             stack.Push(nextMove);
+                            neighbours++;
                         }
+                    }
+
+                    // Backtracking case
+                    if (neighbours == 0 && currentNode.Parent != null)
+                    {
+                        stack.Push(currentNode.Parent);
                     }
                 }
             }
 
-            return currentNode.ListPath();
+            return fullPath;
         }
     }
 }

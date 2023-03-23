@@ -18,7 +18,7 @@ namespace BingChilling.Algorithms
         // Method to search every reachable treasure in the maze
         public abstract List<Node> SearchTreasures(int startX, int startY, bool tsp=false);
 
-        // Method to trace back a path to the starting point
+        // Method to trace back a path to a designated end node
         public abstract List<Node> SearchPathBack(Node startNode);
 
     }
