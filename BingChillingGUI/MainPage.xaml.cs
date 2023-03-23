@@ -90,13 +90,17 @@ namespace BingChillingGUI
                         this.maze = matrix;
                         await DisplayMaze(matrix, row, col);
                     }
+                    else {
+                        throw new ArgumentException("Invalid file extension. Only .txt files are allowed");
+                    }
                 }
 
             }
-            catch (Exception ex) //
+            catch (ArgumentException ex) //
             {
                 // The user canceled or something went wrong
-                Console.WriteLine(ex.Message);
+                await DisplayAlert("Error", ex.Message, "OK");
+                return;
             }
         }
 
@@ -193,7 +197,7 @@ namespace BingChillingGUI
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
                 stopwatch.Start();
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
-                
+                stopwatch.Stop();
                 int index = 0;
                 int count = 0;
                 while(index < bfsPath.Count) {
@@ -237,7 +241,7 @@ namespace BingChillingGUI
                 }
                 steps = bfsPath.Count;
                 //DisplayMaze(this.maze, maze.Rows, maze.Cols);
-                stopwatch.Stop();
+                
 
 
                 if (bfsPath.Count() > 0)
@@ -258,7 +262,7 @@ namespace BingChillingGUI
                 BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
                 stopwatch.Start();
                 List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
-                
+                stopwatch.Stop();
                 Console.WriteLine();
 
                 int index = 0;
@@ -283,8 +287,6 @@ namespace BingChillingGUI
 
                 steps = dfsPath.Count;
 
-                stopwatch.Stop();
-
                 if (dfsPath.Count() > 0)
                 {
                     routeInfo.Text = $"Route : {dfsPath.Last().GetDirections("")}";
@@ -306,7 +308,7 @@ namespace BingChillingGUI
             }
 
             
-            executionTime.Text = $"{stopwatch.ElapsedMilliseconds} ms";
+            executionTime.Text = $"Execution Time : {stopwatch.ElapsedMilliseconds} ms";
             nodesCounter.Text = $"Nodes : {steps}";
             SemanticScreenReader.Announce(nodesCounter.Text);
             SemanticScreenReader.Announce(executionTime.Text);
@@ -325,7 +327,7 @@ namespace BingChillingGUI
         private void ResetButton(object sender, EventArgs e)
         {
             mazeView.Content = null;
-            executionTime.Text = $"";
+            executionTime.Text = $"Execution Time : ";
             nodesCounter.Text = $"Nodes : ";
             routeInfo.Text = "Route : ";
             stepsInfo.Text = "Steps : ";
