@@ -83,6 +83,11 @@ namespace BingChilling.Environment
                     }
                 }
             }
+
+            if (_treasures == 0)
+            {
+                throw new InvalidMazeFormatException("Error parsing maze file.");
+            }
         }
 
         // Method to display the maze on the console
