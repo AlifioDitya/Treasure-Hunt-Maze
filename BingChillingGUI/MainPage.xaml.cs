@@ -196,7 +196,7 @@ namespace BingChillingGUI
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
                 stopwatch.Start();
-                List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                List<Node> bfsPath = tspCheckBox.IsChecked ? bfs.SearchTreasures(maze.StartRow, maze.StartCol, true) : bfs.SearchTreasures(maze.StartRow, maze.StartCol, false);
                 stopwatch.Stop();
                 int index = 0;
                 int count = 0;
@@ -261,7 +261,7 @@ namespace BingChillingGUI
                 // Run DFS algorithm
                 BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
                 stopwatch.Start();
-                List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                List<Node> dfsPath = tspCheckBox.IsChecked ? dfs.SearchTreasures(maze.StartRow, maze.StartCol, true) : dfs.SearchTreasures(maze.StartRow, maze.StartCol, false);
                 stopwatch.Stop();
                 Console.WriteLine();
 
@@ -331,6 +331,9 @@ namespace BingChillingGUI
             nodesCounter.Text = $"Nodes : ";
             routeInfo.Text = "Route : ";
             stepsInfo.Text = "Steps : ";
+            dfsCheckBox.IsChecked = false;
+            bfsCheckBox.IsChecked = false;
+            tspCheckBox.IsChecked = false;
         }
     }
 }
