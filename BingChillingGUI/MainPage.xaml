@@ -80,24 +80,22 @@
             <!--Middle Right-->
             <Grid BackgroundColor="Wheat" Grid.Row="1" Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition/>
                     <RowDefinition Height=".3*"/>
                     <RowDefinition Height=".3*"/>
                     <RowDefinition Height=".3*"/>
-                    <RowDefinition Height=".2*"/>
+                    <RowDefinition Height=".3*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 
-                <Label x:Name="stepsInfo" Grid.Row="3" Text="Steps : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
-                <Label  Grid.Row="4" Text="Execution Time : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
-                <Label x:Name="nodesCounter" Grid.Row="2" Text="Nodes : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+                <Label x:Name="stepsInfo" Grid.Row="0" Text="Steps : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+                <Label x:Name="executionTime" Grid.Row="2" Text="Execution Time : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+                <Label x:Name="nodesCounter" Grid.Row="1" Text="Nodes : " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
                 <!--<Label  Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>-->
                 <!--Ouput-->
                 <!--<Label x:Name="stepsInfo" Grid.Row="1" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>-->
-                <Label x:Name="executionTime" Grid.Row="5" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
+                <Label  Grid.Row="3" Grid.Column="1" Text=" " TextColor="Black" FontFamily="Times New Roman Bold" FontSize="25" HorizontalOptions="Start" Padding="10"/>
 
             </Grid>
 
