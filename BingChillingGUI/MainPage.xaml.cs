@@ -184,6 +184,10 @@ namespace BingChillingGUI
             {
                 await DisplayAlert("Error", "Please select a file.", "OK");
                 return;
+            } catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message.ToString(), "OK");
+                return;
             }
 
             int[,] matrix = new int[maze.Rows, maze.Cols];
@@ -206,9 +210,9 @@ namespace BingChillingGUI
             else if (bfsCheckBox.IsChecked)
             {
                 //await DisplayAlert("BFS", "", "OK");
-                stopwatch.Start();
                 //Run BFS algorithm
                 BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
+                stopwatch.Start();
                 List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol);
                 stopwatch.Stop();
 

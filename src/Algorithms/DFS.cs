@@ -44,7 +44,7 @@ namespace BingChilling.Algorithms
                     }
                     else
                     {
-                        // visited = new int[maze.Rows, maze.Cols];
+                        visited = new int[maze.Rows, maze.Cols];
                         stack.Clear();
                     }
                 }

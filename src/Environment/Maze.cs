@@ -58,7 +58,7 @@ namespace BingChilling.Environment
                         }
                         else
                         {
-                            throw new InvalidMazeFormatException("Error parsing maze file.");
+                            throw new InvalidMazeFormatException("Only one starting point is allowed.");
                         }
                     }
                     else if (lines[i][j] == 'T')
@@ -79,14 +79,14 @@ namespace BingChilling.Environment
                     }
                     else
                     {
-                        throw new InvalidMazeFormatException("Error parsing maze file.");
+                        throw new InvalidMazeFormatException("Please check the file characters.");
                     }
                 }
             }
 
             if (_treasures == 0)
             {
-                throw new InvalidMazeFormatException("Error parsing maze file.");
+                throw new InvalidMazeFormatException("No treasures to be found.");
             }
         }
 
