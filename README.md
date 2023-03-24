@@ -60,7 +60,10 @@ The program uses two algorithms, BFS and DFS, to solve a treasure hunt maze sear
 The program outputs the shortest path to the treasure location, the total number of nodes explored, and the time taken by the algorithm to find the treasure.
 
 ## Author
-## Author
 - [Enrique Alifio Ditya - 13521142](https://github.com/AlifioDitya) 
 - [Irsyad Nurwidianto Basuki - 13521072](https://github.com/irsyadnb) 
 - [Ariel Jovananda - 13521086](https://github.com/arieljovananda88) 
+
+## Made With
+https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white  
+https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white  
