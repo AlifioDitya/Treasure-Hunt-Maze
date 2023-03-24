@@ -7,7 +7,7 @@ namespace BingChilling.Algorithms
 
         public BFS(Maze maze) : base(maze) { }
 
-        public override List<Node> SearchTreasures(int startX, int startY, bool tsp=false)
+        public override List<Node> SearchTreasures(int startX, int startY, bool tsp=false, bool reset=false)
         {
             Queue<Node> queue = new Queue<Node>();
             Node startNode = new Node(startX, startY, null);

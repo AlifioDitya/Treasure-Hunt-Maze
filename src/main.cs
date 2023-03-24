@@ -13,7 +13,7 @@ namespace BingChilling
             // Load maze
             try
             {
-                maze.Load(@"C:\Users\Fio\source\repos\Tubes2_RealBingChilling\src\maze.txt");
+                maze.Load(@"C:\Users\Fio\source\repos\Tubes2_RealBingChilling\src\maze copy 3.txt");
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
@@ -38,10 +38,11 @@ namespace BingChilling
             // Search with DFS
             DFS dfs = new DFS(maze);
             List<Node> dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
-            List<Node> cleanDFSPath = dfsPath.Last().ListPath();
+            DFS cleanDFS = new DFS(maze);
+            List<Node> cleanDFSPath = cleanDFS.SearchTreasures(maze.StartRow, maze.StartCol, true, true);
             Console.WriteLine();
 
-            if (dfsPath.Count > 0)
+            if (cleanDFSPath.Count > 0)
             {
                 Console.WriteLine("DFS Path with Backtrack: ");
                 for (int i = 0; i < dfsPath.Count; i++)

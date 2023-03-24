@@ -99,7 +99,7 @@ namespace BingChillingGUI
                 }
 
             }
-            catch (ArgumentException ex) //
+            catch (ArgumentException ex)
             {
                 // The user canceled or something went wrong
                 await DisplayAlert("Error", ex.Message, "OK");
@@ -196,24 +196,21 @@ namespace BingChillingGUI
             }
             else if (bfsCheckBox.IsChecked)
             {
-                //await DisplayAlert("BFS", "", "OK");
                 //Run BFS algorithm
-                BingChilling.Algorithms.BFS bfs = new BingChilling.Algorithms.BFS(maze);
+                BFS bfs = new BFS(maze);
                 stopwatch.Start();
 
-                List<Node> bfsPath; //= bfs.SearchTreasures(maze.StartRow, maze.StartCol);
+                List<Node> bfsPath;
                 if (tspCheckBox.IsChecked)
                 {
                     bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
-                    //cleanDFSPath = dfsPath.Last().ListPath();
                     stopwatch.Stop();
                 }
                 else
                 {
                     bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol, false);
-                    //cleanDFSPath = dfsPath.Last().ListPath();
+                    stopwatch.Stop();
                 }
-                stopwatch.Stop();
                 visualization(bfsPath, bfsPath);
                 steps = bfsPath.Count;
                 if (bfsPath.Count() > 0)
@@ -229,27 +226,28 @@ namespace BingChillingGUI
             }
             else if (dfsCheckBox.IsChecked)
             {
-                //await DisplayAlert("DFS", "", "OK");
-                stopwatch.Start();
                 // Run DFS algorithm
+                stopwatch.Start();
                 List<Node> dfsPath;
                 List<Node> cleanDFSPath;
-                BingChilling.Algorithms.DFS dfs = new BingChilling.Algorithms.DFS(maze);
+                DFS dfs = new DFS(maze);
+                DFS cleanDFS = new DFS(maze);
                 if (tspCheckBox.IsChecked) {
                     dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
-                    cleanDFSPath = dfsPath.Last().ListPath();
+                    cleanDFSPath = cleanDFS.SearchTreasures(maze.StartRow, maze.StartCol, true, true);
                     stopwatch.Stop();
                 }
                 else {
                     dfsPath = dfs.SearchTreasures(maze.StartRow, maze.StartCol, false);
-                    cleanDFSPath = dfsPath.Last().ListPath();
+                    cleanDFSPath = cleanDFS.SearchTreasures(maze.StartRow, maze.StartCol, false, true);
+                    stopwatch.Stop();
                 }
-                visualization(dfsPath, cleanDFSPath);        
-                steps = dfsPath.Count;               
-                if (dfsPath.Count() > 0)
+                visualization(dfsPath, cleanDFSPath);
+                steps = dfsPath.Count();
+                if (cleanDFSPath.Count() > 0)
                 {
-                    routeInfo.Text = $"Route : {dfsPath.Last().GetDirections("")}";
-                    stepsInfo.Text = $"Steps : {dfsPath.Count() - 1}";
+                    routeInfo.Text = $"Route : {cleanDFSPath.Last().GetDirections("")}";
+                    stepsInfo.Text = $"Steps : {cleanDFSPath.Count() - 1}";
                 }
                 else
                 {
