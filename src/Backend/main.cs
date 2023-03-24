@@ -9,31 +9,32 @@ namespace BingChilling
         {
             // Create empty maze
             Maze maze = new Maze(0, 0);
+            string path = @"Set path to .txt file here";
 
             // Load maze
             try
             {
-                maze.Load(@"C:\Users\Fio\source\repos\Tubes2_RealBingChilling\src\maze copy 3.txt");
+                maze.Load(path);
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 return;
             }
 
-            // Search with BFS
-            //BFS bfs = new BFS(maze);
-            //List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
-            //Console.WriteLine();
+            //Search with BFS
+            BFS bfs = new BFS(maze);
+            List<Node> bfsPath = bfs.SearchTreasures(maze.StartRow, maze.StartCol, true);
+            Console.WriteLine();
 
-            //if (bfsPath.Count > 0)
-            //{
-            //    Console.WriteLine("BFS Path: ");
-            //    for (int i = 0; i < bfsPath.Count; i++)
-            //    {
-            //        Console.WriteLine("({0}, {1})", bfsPath[i].X, bfsPath[i].Y);
-            //    }
-            //    Console.WriteLine();
-            //}
+            if (bfsPath.Count > 0)
+            {
+                Console.WriteLine("BFS Path: ");
+                for (int i = 0; i < bfsPath.Count; i++)
+                {
+                    Console.WriteLine("({0}, {1})", bfsPath[i].X, bfsPath[i].Y);
+                }
+                Console.WriteLine();
+            }
 
             // Search with DFS
             DFS dfs = new DFS(maze);
@@ -56,7 +57,6 @@ namespace BingChilling
                     Console.WriteLine("({0}, {1})", cleanDFSPath[i].X, cleanDFSPath[i].Y);
                 }
             }
-
 
             Console.ReadLine();
         }
