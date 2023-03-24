@@ -46,7 +46,7 @@ namespace BingChillingGUI
                         {
                             matrix[i, j] = -1;
                         }
-                        else if (maze[i, j] == 0 && i == maze.StartRow && i == maze.StartRow && startcount == 0)
+                        else if (maze[i, j] == 0 && i == maze.StartRow && j == maze.StartCol && startcount == 0)
                         {
                             matrix[i, j] = 0;
                             startcount++;
@@ -297,7 +297,6 @@ namespace BingChillingGUI
 
         private async Task ChangeTileColor(int number, int row, int column)
         {
-            Console.WriteLine(number);
             if (this.grid != null && row >= 0 && row < this.grid.RowDefinitions.Count && column >= 0 && column < this.grid.ColumnDefinitions.Count)
             {
                 var label = this.grid.Children.Cast<Label>().FirstOrDefault(e => Grid.GetRow(e) == row && Grid.GetColumn(e) == column);
@@ -401,17 +400,7 @@ namespace BingChillingGUI
                 index++;
             }
 
-            for (int i = 0; i < this.maze.GetLength(0); i++)
-            {
-                for (int j = 0; j < this.maze.GetLength(1); j++)
-                {
-                    Console.Write(this.maze[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine(this.maze.GetLength(0));
-            Console.WriteLine(this.maze.GetLength(1));
-
+          
             await DisplayMaze(this.maze, this.maze.GetLength(0), this.maze.GetLength(1));
 
         }
