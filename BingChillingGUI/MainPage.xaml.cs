@@ -25,6 +25,61 @@ namespace BingChillingGUI
         private Grid grid;
         private FileResult result;
 
+        private async void baseMaze( FileResult result )
+        {
+            try
+            {
+                BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
+                maze.Load(result.FullPath);
+
+
+                fileName.Text = $"\"{result.FileName}\"";
+                this.filePath = result.FullPath;
+
+                int[,] matrix = new int[maze.Rows, maze.Cols];
+                int startcount = 0;
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    {
+                        if (maze[i, j] == 1)
+                        {
+                            matrix[i, j] = -1;
+                        }
+                        else if (maze[i, j] == 0 && i == maze.StartRow && i == maze.StartRow && startcount == 0)
+                        {
+                            matrix[i, j] = 0;
+                            startcount++;
+                        }
+                        else if (maze[i, j] == 2)
+                        {
+                            matrix[i, j] = 2;
+                        }
+                        else if (maze[i, j] == 0)
+                        {
+                            matrix[i, j] = 1;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    {
+                        Console.Write(matrix[i, j] + " ");
+                    }
+                    Console.WriteLine();
+                }
+                this.maze = matrix;
+                await DisplayMaze(matrix, maze.Rows, maze.Cols);
+            }
+            catch (InvalidMazeFormatException ex)
+            {
+                await DisplayAlert("Error", ex.Message.ToString(), "OK");
+                return;
+            }
+        }
+
         private async void Button_Clicked(object sender, EventArgs e)
         {
             PickOptions options = new PickOptions();
@@ -35,45 +90,7 @@ namespace BingChillingGUI
                 {
                     if (result.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                     {
-                        BingChilling.Environment.Maze maze = new BingChilling.Environment.Maze(0, 0);
-                        maze.Load(result.FullPath);
-                        fileName.Text = $"\"{result.FileName}\"";
-                        this.filePath = result.FullPath;
-
-                        int[,] matrix = new int[maze.Rows, maze.Cols];
-                        int startcount = 0;
-                        for(int i = 0; i < matrix.GetLength(0); i++) {
-                            for(int j = 0; j < matrix.GetLength(1); j++) {
-                                if (maze[i, j] == 1)
-                                {
-                                    matrix[i, j] = -1;
-                                }
-                                else if (maze[i, j] == 0 && i == maze.StartRow && i == maze.StartRow && startcount == 0)
-                                {
-                                    matrix[i, j] = 0;
-                                    startcount++;
-                                }
-                                else if (maze[i, j] == 2)
-                                {
-                                    matrix[i, j] = 2;
-                                }
-                                else if (maze[i,j] == 0)
-                                {
-                                    matrix[i, j] = 1;
-                                }
-                            }
-                        }
-
-                        for (int i = 0; i < matrix.GetLength(0); i++)
-                        {
-                            for (int j = 0; j < matrix.GetLength(1); j++)
-                            {
-                                Console.Write(matrix[i, j] + " ");
-                            }
-                            Console.WriteLine();
-                        }
-                        this.maze = matrix;
-                        await DisplayMaze(matrix, maze.Rows, maze.Cols);
+                        baseMaze(result);
                     }
                     else
                     {
@@ -276,6 +293,8 @@ namespace BingChillingGUI
             dfsCheckBox.IsChecked = false;
             bfsCheckBox.IsChecked = false;
             tspCheckBox.IsChecked = false;
+            if(this.filePath != null)
+                baseMaze(result);
         }
 
         private async Task ChangeTileColor(int number, int row, int column)
