@@ -65,5 +65,5 @@ The program outputs the shortest path to the treasure location, the total number
 - [Ariel Jovananda - 13521086](https://github.com/arieljovananda88) 
 
 ## Made With
-https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white  
-https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white  
+[![.NET](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)]  
+[![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)]  
